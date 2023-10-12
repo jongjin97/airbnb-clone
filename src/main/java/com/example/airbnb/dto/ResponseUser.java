@@ -16,7 +16,7 @@ public class ResponseUser {
     private String phone;
     private String address;
     private String role;
-
+    private String token;
     public ResponseUser(User user){
         this.name = user.getName();
         this.email = user.getEmail();

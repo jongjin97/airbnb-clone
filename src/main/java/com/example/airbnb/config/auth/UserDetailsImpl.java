@@ -22,7 +22,9 @@ public class UserDetailsImpl implements UserDetails {
         // 사용자의 권한을 설정합니다. 예시로 "ROLE_USER"를 부여합니다.
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
     }
-
+    public Long getId() {
+        return user.getId();
+    }
     @Override
     public String getPassword() {
         return user.getPassword();

@@ -1,5 +1,8 @@
 package com.example.airbnb.service;
 
+import com.example.airbnb.config.auth.UserDetailsImpl;
+import com.example.airbnb.config.jwt.JwtTokenUtil;
+import com.example.airbnb.dto.RequestSignin;
 import com.example.airbnb.dto.RequestUser;
 import com.example.airbnb.dto.ResponseUser;
 import com.example.airbnb.entity.User;
@@ -18,6 +21,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     public ResponseUser signUp(RequestUser requestUser) throws Exception {
+        if(!requestUser.getPassword().equals(requestUser.getConfirmPassword()))
+            throw new Exception("password and confirm password does not match");
         Optional<User> findUser = userRepository.findByEmail(requestUser.getEmail());
         if(findUser.isPresent())
             throw new AccountAlreadyExistsException("Email already exists");
@@ -28,6 +33,20 @@ public class UserService {
         User user = new User(requestUser);
         User result = userRepository.save(user);
         ResponseUser responseUser = new ResponseUser(result);
+        return responseUser;
+    }
+
+    public ResponseUser signIn(RequestSignin requestUser) throws Exception {
+        Optional<User> findUser = userRepository.findByEmail(requestUser.getEmail());
+        if(findUser.isEmpty())
+            throw new Exception("Email does not exist");
+        if(!passwordEncoder.matches(requestUser.getPassword(), findUser.get().getPassword()))
+            throw new Exception("Password is incorrect");
+        ResponseUser responseUser = new ResponseUser(findUser.get());
+        UserDetailsImpl userDetailsImpl = new UserDetailsImpl(findUser.get());
+        JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+        String jwtToken = jwtTokenUtil.generateToken(userDetailsImpl);
+        responseUser.setToken(jwtToken);
         return responseUser;
     }
 }
