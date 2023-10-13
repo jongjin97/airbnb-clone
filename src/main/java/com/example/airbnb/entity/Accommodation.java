@@ -2,6 +2,7 @@ package com.example.airbnb.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Accommodation extends EntityTime{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +31,9 @@ public class Accommodation extends EntityTime{
     @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL)
     List<AccommodationImage> accommodationImageList; // 이미지 리스트
 
+    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL)
+    private List<Room> room;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -39,5 +44,9 @@ public class Accommodation extends EntityTime{
 
     public void setAccommodationImageList(List<AccommodationImage> accommodationImageList) {
         this.accommodationImageList = accommodationImageList;
+    }
+
+    public void setRoom(List<Room> room) {
+        this.room = room;
     }
 }

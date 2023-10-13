@@ -31,4 +31,14 @@ public class Reservation extends EntityTime{
 
     @Column(nullable = false)
     private LocalDate checkOutDate;
+
+    @Column(nullable = false)
+    private int adults;
+
+    @Column(nullable = false)
+    private int children;
+
+    @Column(nullable = false)
+    private int infants;
+
 }

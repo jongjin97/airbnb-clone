@@ -1,5 +1,7 @@
 package com.example.airbnb.document;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -10,6 +12,8 @@ import java.util.List;
 @Document(collation = "amenity")
 @Setter
 @Getter
+@Builder
+@AllArgsConstructor
 public class Amenity {
     @Id
     private String id;

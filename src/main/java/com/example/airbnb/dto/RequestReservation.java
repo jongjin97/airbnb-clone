@@ -27,12 +27,21 @@ public class RequestReservation {
 
     private LocalDate checkOutDate;
 
+    private int adults;
+
+    private int children;
+
+    private int infants;
+
     public Reservation toEntity(Accommodation accommodation) {
         return Reservation.builder()
                 .user(user)
                 .accommodation(accommodation)
                 .checkInDate(checkInDate)
                 .checkOutDate(checkOutDate)
+                .adults(adults)
+                .children(children)
+                .infants(infants)
                 .build();
     }
 }

@@ -28,10 +28,10 @@ public class AccommodationController {
     private final AccommodationService  accommodationService;
 
     @PostMapping
-    public ApiResult<String> createAccommodation(@RequestPart RequestAccommodation accommodation
+    public ApiResult<String> createAccommodation(@RequestPart RequestAccommodation requestAccommodation
             , @RequestPart List<MultipartFile> multipartFiles
             , @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        accommodation.getAccommodation().setUser(userDetails.getUser());
+
         List<RequestAccommodationImage> imageList = new ArrayList<>();
         try {
             for (MultipartFile multipartFile : multipartFiles) {
@@ -55,7 +55,7 @@ public class AccommodationController {
             e.printStackTrace();
         }
         accommodationService
-                .accommodationSave(accommodation.getAccommodation(), accommodation.getAmenity(), imageList);
+                .accommodationSave(requestAccommodation, imageList, userDetails.getUser());
         return success("Accommodation saved successfully");
     }
 }
