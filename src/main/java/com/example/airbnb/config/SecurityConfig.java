@@ -2,6 +2,7 @@ package com.example.airbnb.config;
 
 import com.example.airbnb.config.auth.UserDetailsServiceImpl;
 import com.example.airbnb.config.jwt.JwtTokenFilter;
+import com.example.airbnb.config.jwt.JwtTokenUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final JwtTokenUtil jwtTokenUtil;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -59,8 +61,7 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/user/signin", "/api/user/signup").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.POST,"/api/user/signin", "/api/user/signup", "/api/accommodation").permitAll())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -69,7 +70,7 @@ public class SecurityConfig {
 //                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
 //                        httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(authenticationEntryPoint()))
                 .userDetailsService(userDetailsServiceImpl)
-                .addFilterBefore(new JwtTokenFilter(userDetailsServiceImpl), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtTokenFilter(userDetailsServiceImpl, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

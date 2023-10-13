@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User extends EntityTime{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

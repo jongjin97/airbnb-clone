@@ -12,6 +12,7 @@ import com.example.airbnb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    @Transactional
     public ResponseUser signUp(RequestUser requestUser) throws Exception {
         if(!requestUser.getPassword().equals(requestUser.getConfirmPassword()))
             throw new Exception("password and confirm password does not match");
@@ -36,6 +38,7 @@ public class UserService {
         return responseUser;
     }
 
+    @Transactional
     public ResponseUser signIn(RequestSignin requestUser) throws Exception {
         Optional<User> findUser = userRepository.findByEmail(requestUser.getEmail());
         if(findUser.isEmpty())
