@@ -36,4 +36,8 @@ public class Accommodation extends EntityTime{
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setAccommodationImageList(List<AccommodationImage> accommodationImageList) {
+        this.accommodationImageList = accommodationImageList;
+    }
 }
