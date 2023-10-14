@@ -1,4 +1,4 @@
-import { ResponseLogin } from "../interface/auth";
+import { ResponseUser } from "../interface/auth";
 
 export const persistToken = (token: string) => {
     localStorage.setItem('accessToken', token);
@@ -13,11 +13,11 @@ export const deleteToken = () => {
 }
 
 
-export const persistUser = (user: ResponseLogin) => {
+export const persistUser = (user: ResponseUser) => {
     localStorage.setItem('user', JSON.stringify(user));
 }
 
-export const readUser = (): ResponseLogin | null => {
+export const readUser = (): ResponseUser | null => {
     const userStr = localStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;
 }
