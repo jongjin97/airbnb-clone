@@ -1,9 +1,16 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { BiSearch } from "react-icons/bi";
+import { useSearchParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "src/app/hooks";
+import { openSearchModal } from "src/features/modal/SearchModalAction";
 
 const Search = () => {
-    // const searchModal = useSearchModal();
-    // const params = useSearchParams();
+    const searchModal = useAppSelector((state) => state.search.isOpen);
+    const params = useSearchParams();
+    const dispatch = useAppDispatch();
+    const handleLoginModal = useCallback(() => {
+      dispatch(openSearchModal());
+    }, []);
     // const { getByValue } = useCountries();
   
     // const  locationValue = params?.get('locationValue'); 
@@ -45,7 +52,7 @@ const Search = () => {
   
     return ( 
       <div
-        //onClick={searchModal.onOpen}
+        onClick={handleLoginModal}
         className="
           border-[1px] 
           w-full 
