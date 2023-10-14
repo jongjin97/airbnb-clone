@@ -15,7 +15,6 @@ import { openLoginModal } from "src/features/modal/LoginModalAction";
 
 const RegisterModal= () => {
     const registerModal = useAppSelector((state: RootState) => state.register.isOpen);
-    //const loginModal = useLoginModal();
     const loginModal = useAppSelector((state: RootState) => state.login.isOpen);
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
