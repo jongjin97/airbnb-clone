@@ -9,12 +9,14 @@ import Modal from "./Modal";
 import Button from "../Button";
 import Heading from "../Heading";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
-import { closeRegisterModal, openRegisterModal } from "src/features/modal/RegisterModalAction";
+import { closeRegisterModal } from "src/features/modal/RegisterModalAction";
 import { RootState } from "src/app/store";
+import { openLoginModal } from "src/features/modal/LoginModalAction";
 
 const RegisterModal= () => {
     const registerModal = useAppSelector((state: RootState) => state.register.isOpen);
     //const loginModal = useLoginModal();
+    const loginModal = useAppSelector((state: RootState) => state.login.isOpen);
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
   
@@ -40,9 +42,8 @@ const RegisterModal= () => {
       axios.post('/api/register', data)
       .then(() => {
         toast.success('Registered!');
-        dispatch(closeRegisterModal);
-        //registerModal.onClose();
-        //loginModal.onOpen();
+        dispatch(closeRegisterModal());
+        dispatch(openLoginModal());
       })
       .catch((error) => {
         toast.error(error);
@@ -53,11 +54,9 @@ const RegisterModal= () => {
     }
   
     const onToggle = useCallback(() => {
-      dispatch(closeRegisterModal);
-      //registerModal.onClose();
-      //loginModal.onOpen();
-    }, [registerModal])
-    //}, [registerModal, loginModal])
+      dispatch(closeRegisterModal());
+      dispatch(openLoginModal());
+    }, [registerModal, loginModal])
     const bodyContent = (
       <div className="flex flex-col gap-4">
         <Heading

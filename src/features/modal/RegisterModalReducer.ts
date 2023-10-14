@@ -12,7 +12,6 @@ interface RegisterModalState {
     state = initialState,
     action
   ) => {
-    console.log(state);
     switch (action.type) {
       case ActionTypes.OPEN_REGISTER_MODAL:
         return { ...state, isOpen: true };

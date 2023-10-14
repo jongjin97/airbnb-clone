@@ -5,6 +5,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import Avatar from "../Avatar";
 import { openRegisterModal } from "src/features/modal/RegisterModalAction";
+import { openLoginModal } from "src/features/modal/LoginModalAction";
 
 const UserMenu = () => {
     const router = useNavigate();
@@ -14,10 +15,12 @@ const UserMenu = () => {
     const toggleOpen = useCallback(() => {
       setIsOpen((value) => !value);
     }, []);
-    const handleOpenModal = useCallback(() => {
+    const handleRegisterModal = useCallback(() => {
       dispatch(openRegisterModal());
     }, []);
-  
+    const handleLoginModal = useCallback(() => {
+      dispatch(openLoginModal());
+    }, []);
     return ( 
       <div className="relative">
         <div className="flex flex-row items-center gap-3">
@@ -110,11 +113,11 @@ const UserMenu = () => {
                 <>
                   <MenuItem 
                     label="Login" 
-                    onClick={() => (null)}
+                    onClick={handleLoginModal}
                   />
                   <MenuItem 
                     label="Sign up" 
-                    onClick={handleOpenModal}
+                    onClick={handleRegisterModal}
                   />
                 </>
               )}
