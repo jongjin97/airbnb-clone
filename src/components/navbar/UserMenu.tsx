@@ -1,16 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import MenuItem from "./MenuItem";
-import { Avatar } from "antd";
 import { useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { useAppSelector } from "src/app/hooks";
+import { useAppDispatch, useAppSelector } from "src/app/hooks";
+import Avatar from "../Avatar";
+import { openRegisterModal } from "src/features/modal/RegisterModalAction";
 
 const UserMenu = () => {
     const router = useNavigate();
+    const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.auth.user);
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = useCallback(() => {
       setIsOpen((value) => !value);
+    }, []);
+    const handleOpenModal = useCallback(() => {
+      dispatch(openRegisterModal());
     }, []);
   
     return ( 
@@ -53,7 +58,7 @@ const UserMenu = () => {
           >
             <AiOutlineMenu />
             <div className="hidden md:block">
-              <Avatar src={user?.img} />
+              <Avatar src={null} />
             </div>
           </div>
         </div>
@@ -109,7 +114,7 @@ const UserMenu = () => {
                   />
                   <MenuItem 
                     label="Sign up" 
-                    onClick={() => (null)}
+                    onClick={handleOpenModal}
                   />
                 </>
               )}
