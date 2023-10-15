@@ -11,14 +11,17 @@ import CategoryInput from '../inputs/CategoryInput';
 import { categories } from '../navbar/Categories';
 import ImageUpload from '../inputs/ImageUpload';
 import { closeRentModal } from 'src/features/modal/RentModalAction';
+import { facilities } from '../Facilitie';
+import FacilitiInput from '../inputs/FacilitieInput';
 const Map = lazy(() => import('../Map'));
 enum STEPS {
     CATEGORY = 0,
     LOCATION = 1,
-    INFO = 2,
-    IMAGES = 3,
-    DESCRIPTION = 4,
-    PRICE = 5,
+    FACILITIES = 2,
+    INFO = 3,
+    IMAGES = 4,
+    DESCRIPTION = 5,
+    PRICE = 6,
   }
   
   const RentModal = () => {
@@ -40,6 +43,7 @@ enum STEPS {
     } = useForm<FieldValues>({
       defaultValues: {
         category: '',
+        facility: [],
         location: null,
         guestCount: 1,
         roomCount: 1,
@@ -53,6 +57,7 @@ enum STEPS {
   
     const location = watch('location');
     const category = watch('category');
+    const facility = watch('facility');
     const guestCount = watch('guestCount');
     const roomCount = watch('roomCount');
     const bathroomCount = watch('bathroomCount');
@@ -69,7 +74,13 @@ enum STEPS {
         shouldValidate: true
       })
     }
-  
+    const setFacilityValue = (id: string, value: any) => {
+      setValue(id, [...watch(id), value], {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true
+      })
+    }
     const onBack = () => {
       setStep((value) => value - 1);
     }
@@ -149,7 +160,39 @@ enum STEPS {
         </div>
       </div>
     )
-  
+    if (step === STEPS.FACILITIES) {
+      bodyContent = (
+        <div className="flex flex-col gap-8">
+          <Heading
+            title="Which of these best describes your place?"
+            subtitle="Pick a facility"
+          />
+          <div 
+            className="
+              grid 
+              grid-cols-1 
+              md:grid-cols-2 
+              gap-3
+              max-h-[50vh]
+              overflow-y-auto
+            "
+          >
+            {facilities.map((item) => (
+              <div key={item.label} className="col-span-1">
+                <FacilitiInput
+                  onClick={(facility) => 
+                  setFacilityValue('facility', facility)}
+                  //selected={facility === item.label}
+                  selected={facility.includes(item.label)}
+                  label={item.label}
+                  icon={item.icon}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
     if (step === STEPS.LOCATION) {
       bodyContent = (
         <div className="flex flex-col gap-8">
