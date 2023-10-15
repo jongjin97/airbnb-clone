@@ -26,6 +26,9 @@ const UserMenu = () => {
     const handleRentModal = useCallback(() => {
       dispatch(openRentModal());
     }, []);
+    const handleLogout = useCallback(() => {
+      dispatch(doLogOut());
+    }, []);
     return ( 
       <div className="relative">
         <div className="flex flex-row items-center gap-3">
@@ -111,7 +114,7 @@ const UserMenu = () => {
                   <hr />
                   <MenuItem 
                     label="Logout" 
-                    onClick={() => (dispatch(doLogOut))}
+                    onClick={handleLogout}
                   />
                 </>
               ) : (

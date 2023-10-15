@@ -12,6 +12,9 @@ import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { closeRegisterModal } from "src/features/modal/RegisterModalAction";
 import { RootState } from "src/app/store";
 import { openLoginModal } from "src/features/modal/LoginModalAction";
+import { httpApi } from "src/api/http.api";
+import { regist } from "src/api/auth.api";
+import { doSignUp } from "src/features/auth/authAction";
 
 const RegisterModal= () => {
     const registerModal = useAppSelector((state: RootState) => state.register.isOpen);
@@ -36,20 +39,10 @@ const RegisterModal= () => {
       dispatch(closeRegisterModal());
     }, []);
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
+      console.log(data);
       setIsLoading(true);
-  
-      axios.post('/api/register', data)
-      .then(() => {
-        toast.success('Registered!');
-        dispatch(closeRegisterModal());
-        dispatch(openLoginModal());
-      })
-      .catch((error) => {
-        toast.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      })
+      dispatch(doSignUp(data));
+      setIsLoading(false);
     }
   
     const onToggle = useCallback(() => {

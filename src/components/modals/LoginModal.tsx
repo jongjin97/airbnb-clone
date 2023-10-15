@@ -11,6 +11,8 @@ import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import toast from "react-hot-toast";
 import { closeLoginModal } from "src/features/modal/LoginModalAction";
 import { openRegisterModal } from "src/features/modal/RegisterModalAction";
+import { login } from "src/api/auth.api";
+import { doLogin } from "src/features/auth/authAction";
 
 const LoginModal = () => {
     const router = useNavigate();
@@ -34,26 +36,9 @@ const LoginModal = () => {
     
     const onSubmit: SubmitHandler<FieldValues> = 
     (data) => {
-
-    //   setIsLoading(true);
-  
-    //   signIn('credentials', { 
-    //     ...data, 
-    //     redirect: false,
-    //   })
-    //   .then((callback) => {
-    //     setIsLoading(false);
-  
-    //     if (callback?.ok) {
-    //       toast.success('Logged in');
-    //       router.refresh();
-    //       loginModal.onClose();
-    //     }
-        
-    //     if (callback?.error) {
-    //       toast.error(callback.error);
-    //     }
-   //   });
+      setIsLoading(true);
+      dispatch(doLogin(data));
+      setIsLoading(false);
     }
     const handleCloseModal = useCallback(() => {
         dispatch(closeLoginModal());
