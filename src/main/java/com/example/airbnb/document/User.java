@@ -6,8 +6,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document
 @Table(name = "user")
 @Getter
 @AllArgsConstructor
@@ -23,10 +24,6 @@ public class User extends EntityTime{
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private String phone;
-    @Column(nullable = false)
-    private String address;
-    @Column(nullable = false)
     private String role;
 
 
@@ -34,8 +31,6 @@ public class User extends EntityTime{
         this.name = requestUser.getName();
         this.email = requestUser.getEmail();
         this.password = requestUser.getPassword();
-        this.phone = requestUser.getPhone();
-        this.address = requestUser.getAddress();
         this.role = Role.ROLE_USER.getRole();
     }
 }
