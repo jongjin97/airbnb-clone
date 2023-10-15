@@ -1,7 +1,7 @@
 import { ResponseUser } from "../interface/auth";
 
 export const persistToken = (token: string) => {
-    localStorage.setItem('accessToken', token);
+    localStorage.setItem('accessToken', token.replace('Bearer ', ''));
 }
 
 export const readToken = (): string | null => {

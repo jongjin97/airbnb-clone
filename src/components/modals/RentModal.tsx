@@ -13,6 +13,8 @@ import ImageUpload from '../inputs/ImageUpload';
 import { closeRentModal } from 'src/features/modal/RentModalAction';
 import { facilities } from '../Facilitie';
 import FacilitiInput from '../inputs/FacilitieInput';
+import { createRent } from 'src/api/rent.api';
+import toast from 'react-hot-toast';
 const Map = lazy(() => import('../Map'));
 enum STEPS {
     CATEGORY = 0,
@@ -92,12 +94,21 @@ enum STEPS {
         dispatch(closeRentModal());
       }, []);
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
+      console.log(data);
       if (step !== STEPS.PRICE) {
         return onNext();
       }
       console.log(data);
-     // setIsLoading(true);
-  
+      setIsLoading(true);
+      createRent(data).then(() => {
+        toast.success('Listing created!');
+        router(0);
+        reset();
+        setStep(STEPS.CATEGORY)
+        dispatch(closeRentModal());
+      }).finally(() => {
+        setIsLoading(false);
+      });
     //   axios.post('/api/listings', data)
     //   .then(() => {
     //     toast.success('Listing created!');
