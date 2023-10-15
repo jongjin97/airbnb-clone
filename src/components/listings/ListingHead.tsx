@@ -1,0 +1,62 @@
+import useCountries from "src/hooks/useCountries";
+import { ResponseUser } from "src/interface/auth";
+import Heading from "../Heading";
+import HeartButton from "../HeartButton";
+
+interface ListingHeadProps {
+    title: string;
+    locationValue: string;
+    imageSrc: string;
+    id: number;
+    currentUser?: ResponseUser | null
+  }
+  
+  const ListingHead: React.FC<ListingHeadProps> = ({
+    title,
+    locationValue,
+    imageSrc,
+    id,
+    currentUser
+  }) => {
+    const { getByValue } = useCountries();
+  
+    const location = getByValue(locationValue);
+  
+    return ( 
+      <>
+        <Heading
+          title={title}
+          subtitle={`${location?.region}, ${location?.label}`}
+        />
+        <div className="
+            w-full
+            h-[60vh]
+            overflow-hidden 
+            rounded-xl
+            relative
+          "
+        >
+          <img
+            src={imageSrc}
+            //fill
+            className="object-cover w-full"
+            alt="Image"
+          />
+          <div
+            className="
+              absolute
+              top-5
+              right-5
+            "
+          >
+            <HeartButton 
+              listingId={id}
+              currentUser={currentUser}
+            />
+          </div>
+        </div>
+      </>
+     );
+  }
+   
+  export default ListingHead;

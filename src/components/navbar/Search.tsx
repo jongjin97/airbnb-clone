@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
-import useCountries from "src/app/useCountries";
+import useCountries from "src/hooks/useCountries";
 import { openSearchModal } from "src/features/modal/SearchModalAction";
 
 const Search = () => {

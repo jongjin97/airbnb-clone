@@ -7,6 +7,7 @@ import Avatar from "../Avatar";
 import { openRegisterModal } from "src/features/modal/RegisterModalAction";
 import { openLoginModal } from "src/features/modal/LoginModalAction";
 import { openRentModal } from "src/features/modal/RentModalAction";
+import { doLogOut } from "src/features/auth/authAction";
 
 const UserMenu = () => {
     const router = useNavigate();
@@ -110,7 +111,7 @@ const UserMenu = () => {
                   <hr />
                   <MenuItem 
                     label="Logout" 
-                    onClick={() => (null)}
+                    onClick={() => (dispatch(doLogOut))}
                   />
                 </>
               ) : (

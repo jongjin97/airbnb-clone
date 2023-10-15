@@ -84,7 +84,7 @@ enum STEPS {
       if (step !== STEPS.PRICE) {
         return onNext();
       }
-      
+      console.log(data);
      // setIsLoading(true);
   
     //   axios.post('/api/listings', data)
