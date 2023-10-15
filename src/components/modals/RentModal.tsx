@@ -16,8 +16,8 @@ import FacilitiInput from '../inputs/FacilitieInput';
 const Map = lazy(() => import('../Map'));
 enum STEPS {
     CATEGORY = 0,
-    LOCATION = 1,
-    FACILITIES = 2,
+    FACILITIES = 1,
+    LOCATION = 2,
     INFO = 3,
     IMAGES = 4,
     DESCRIPTION = 5,
@@ -48,7 +48,7 @@ enum STEPS {
         guestCount: 1,
         roomCount: 1,
         bathroomCount: 1,
-        imageSrc: '',
+        imageSrc: [],
         price: 1,
         title: '',
         description: '',
@@ -74,7 +74,7 @@ enum STEPS {
         shouldValidate: true
       })
     }
-    const setFacilityValue = (id: string, value: any) => {
+    const setArrayValue = (id: string, value: any) => {
       setValue(id, [...watch(id), value], {
         shouldDirty: true,
         shouldTouch: true,
@@ -181,7 +181,7 @@ enum STEPS {
               <div key={item.label} className="col-span-1">
                 <FacilitiInput
                   onClick={(facility) => 
-                  setFacilityValue('facility', facility)}
+                  setArrayValue('facility', facility)}
                   //selected={facility === item.label}
                   selected={facility.includes(item.label)}
                   label={item.label}
@@ -250,7 +250,7 @@ enum STEPS {
             subtitle="Show guests what your place looks like!"
           />
           <ImageUpload
-            onChange={(value) => setCustomValue('imageSrc', value)}
+            onChange={(value) => setArrayValue('imageSrc', value)}
             value={imageSrc}
           />
         </div>
