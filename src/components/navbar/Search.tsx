@@ -1,58 +1,60 @@
+import { differenceInDays } from "date-fns";
 import { useCallback, useMemo } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
+import useCountries from "src/app/useCountries";
 import { openSearchModal } from "src/features/modal/SearchModalAction";
 
 const Search = () => {
     const searchModal = useAppSelector((state) => state.search.isOpen);
-    const params = useSearchParams();
+    const [params, setParams] = useSearchParams();
     const dispatch = useAppDispatch();
-    const handleLoginModal = useCallback(() => {
+    const handleSearchModal = useCallback(() => {
       dispatch(openSearchModal());
     }, []);
-    // const { getByValue } = useCountries();
+    const { getByValue } = useCountries();
   
-    // const  locationValue = params?.get('locationValue'); 
-    // const  startDate = params?.get('startDate');
-    // const  endDate = params?.get('endDate');
-    // const  guestCount = params?.get('guestCount');
+    const  locationValue = params?.get('locationValue'); 
+    const  startDate = params?.get('startDate');
+    const  endDate = params?.get('endDate');
+    const  guestCount = params?.get('guestCount');
   
-    // const locationLabel = useMemo(() => {
-    //   if (locationValue) {
-    //     return getByValue(locationValue as string)?.label;
-    //   }
+    const locationLabel = useMemo(() => {
+      if (locationValue) {
+        return getByValue(locationValue as string)?.label;
+      }
   
-    //   return 'Anywhere';
-    // }, [locationValue, getByValue]);
+      return 'Anywhere';
+    }, [locationValue, getByValue]);
   
-    // const durationLabel = useMemo(() => {
-    //   if (startDate && endDate) {
-    //     const start = new Date(startDate as string);
-    //     const end = new Date(endDate as string);
-    //     let diff = differenceInDays(end, start);
+    const durationLabel = useMemo(() => {
+      if (startDate && endDate) {
+        const start = new Date(startDate as string);
+        const end = new Date(endDate as string);
+        let diff = differenceInDays(end, start);
   
-    //     if (diff === 0) {
-    //       diff = 1;
-    //     }
+        if (diff === 0) {
+          diff = 1;
+        }
   
-    //     return `${diff} Days`;
-    //   }
+        return `${diff} Days`;
+      }
   
-    //   return 'Any Week'
-    // }, [startDate, endDate]);
+      return 'Any Week'
+    }, [startDate, endDate]);
   
-    // const guestLabel = useMemo(() => {
-    //   if (guestCount) {
-    //     return `${guestCount} Guests`;
-    //   }
+    const guestLabel = useMemo(() => {
+      if (guestCount) {
+        return `${guestCount} Guests`;
+      }
   
-    //   return 'Add Guests';
-    // }, [guestCount]);
+      return 'Add Guests';
+    }, [guestCount]);
   
     return ( 
       <div
-        onClick={handleLoginModal}
+        onClick={handleSearchModal}
         className="
           border-[1px] 
           w-full 

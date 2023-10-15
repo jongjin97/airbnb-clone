@@ -4,15 +4,13 @@ import 'leaflet/dist/leaflet.css'
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl; 
 L.Icon.Default.mergeOptions({
-    // @ts-ignore
-    iconUrl: markerIcon.src,
-    // @ts-ignore
-    iconRetinaUrl: markerIcon2x.src,
-    // @ts-ignore
-    shadowUrl: markerShadow.src,
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerIcon2x,
+    shadowUrl: markerShadow,
 });
 
 export interface MapProps {
@@ -28,9 +26,10 @@ const Map: React.FC<MapProps> = ({ center }) => {
       <MapContainer 
       // @ts-ignore
         center={center as L.LatLngExpression || [51, -0.09]} 
-        zoom={center ? 4 : 2} 
+        zoom={center ? 4 : 4} 
         scrollWheelZoom={false} 
         className="h-[35vh] rounded-lg"
+        style={{ position: 'relative', zIndex: 0 }}
       >
         <TileLayer
           url={url}

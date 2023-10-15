@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import Avatar from "../Avatar";
 import { openRegisterModal } from "src/features/modal/RegisterModalAction";
 import { openLoginModal } from "src/features/modal/LoginModalAction";
+import { openRentModal } from "src/features/modal/RentModalAction";
 
 const UserMenu = () => {
     const router = useNavigate();
@@ -21,11 +22,14 @@ const UserMenu = () => {
     const handleLoginModal = useCallback(() => {
       dispatch(openLoginModal());
     }, []);
+    const handleRentModal = useCallback(() => {
+      dispatch(openRentModal());
+    }, []);
     return ( 
       <div className="relative">
         <div className="flex flex-row items-center gap-3">
           <div 
-           // onClick={onRent}
+            onClick={handleRentModal}
             className="
               hidden
               md:block

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react';
 import { Range } from 'react-date-range';
 import Heading from '../Heading';
 import Calendar from '../inputs/Calendar';
@@ -8,9 +8,9 @@ import CountrySelect, { CountrySelectValue } from '../inputs/CountrySelect';
 import { useAppDispatch, useAppSelector } from 'src/app/hooks';
 import { closeSearchModal } from 'src/features/modal/SearchModalAction';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { MapProps } from '../Map';
-import Map from '../Map';
-
+import qs from 'qs';
+import { formatISO } from 'date-fns';
+const Map = lazy(() => import('../Map'));
 enum STEPS {
     LOCATION = 0,
     DATE = 1,
@@ -27,24 +27,18 @@ enum STEPS {
     const [guestCount, setGuestCount] = useState(1);
     const [roomCount, setRoomCount] = useState(1);
     const [bathroomCount, setBathroomCount] = useState(1);
+    const [mapKey, setMapKey] = useState(0);
     const [dateRange, setDateRange] = useState<Range>({
       startDate: new Date(),
       endDate: new Date(),
       key: 'selection'
     });
   
-    // const Map = useMemo(() => dynamic(() => import('../Map'), { 
-    //   ssr: false 
-    // }), [location]);
-
-    // useEffect(() => {
-    //     const importMap = async () => {
-    //       await import('../Map');
-    //       setIsMapLoaded(true);
-    //     };
-    
-    //     importMap();
-    //   }, []);
+    useEffect(() => {
+      // location 설정 로직
+      // location이 변경될 때마다 mapKey 값을 업데이트하여 Map 컴포넌트를 새로 로딩하도록 함
+      setMapKey((prevKey) => prevKey + 1);
+    }, [location])
 
     const onBack = useCallback(() => {
       setStep((value) => value - 1);
@@ -59,36 +53,36 @@ enum STEPS {
         return onNext();
       }
   
-    //   let currentQuery = {};
+      let currentQuery = {};
   
-    //   if (params) {
-    //     currentQuery = qs.parse(params.toString())
-    //   }
+      if (params) {
+        currentQuery = qs.parse(params.toString())
+      }
   
-    //   const updatedQuery: any = {
-    //     ...currentQuery,
-    //     locationValue: location?.value,
-    //     guestCount,
-    //     roomCount,
-    //     bathroomCount
-    //   };
+      const updatedQuery: any = {
+        ...currentQuery,
+        locationValue: location?.value,
+        guestCount,
+        roomCount,
+        bathroomCount
+      };
   
-    //   if (dateRange.startDate) {
-    //     updatedQuery.startDate = formatISO(dateRange.startDate);
-    //   }
+      if (dateRange.startDate) {
+        updatedQuery.startDate = formatISO(dateRange.startDate);
+      }
   
-    //   if (dateRange.endDate) {
-    //     updatedQuery.endDate = formatISO(dateRange.endDate);
-    //   }
+      if (dateRange.endDate) {
+        updatedQuery.endDate = formatISO(dateRange.endDate);
+      }
   
-    //   const url = qs.stringifyUrl({
-    //     url: '/',
-    //     query: updatedQuery,
-    //   }, { skipNull: true });
+      const url = qs.stringify({
+        url: '/',
+        query: updatedQuery,
+      }, { skipNulls: true });
   
       setStep(STEPS.LOCATION);
       dispatch(closeSearchModal());
-      //router.push(url);
+      router(url);
     }, 
     [
       step, 
@@ -133,7 +127,9 @@ enum STEPS {
             setLocation(value as CountrySelectValue)} 
         />
         <hr />
-        <Map center={location?.latlng } />
+        <Suspense>
+            <Map key = {mapKey} center={location?.latlng}/>
+          </Suspense>
         {/* {isMapLoaded && <Map center={location?.latlng} />} */}
       </div>
     )

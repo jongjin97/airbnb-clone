@@ -1,4 +1,5 @@
 import Select from 'react-select'
+import useCountries from 'src/app/useCountries';
 
 export type CountrySelectValue = {
     flag: string;
@@ -17,14 +18,14 @@ export type CountrySelectValue = {
     value,
     onChange
   }) => {
-    //const { getAll } = useCountries();
+    const { getAll } = useCountries();
   
     return ( 
-      <div>
+      <div style={{position: 'relative', zIndex: 1}}>
         <Select
           placeholder="Anywhere"
           isClearable
-          //options={getAll()}
+          options={getAll()}
           value={value}
           onChange={(value) => onChange(value as CountrySelectValue)}
           formatOptionLabel={(option: any) => (
