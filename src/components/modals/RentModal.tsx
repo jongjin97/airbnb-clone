@@ -85,7 +85,7 @@ enum STEPS {
         return onNext();
       }
       
-      setIsLoading(true);
+     // setIsLoading(true);
   
     //   axios.post('/api/listings', data)
     //   .then(() => {

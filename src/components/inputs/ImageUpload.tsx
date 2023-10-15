@@ -16,13 +16,20 @@ declare global {
     onChange,
     value
   }) => {
-    const handleUpload = useCallback((result: any) => {
-      onChange(result.info.secure_url);
+    const handleUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          onChange(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
     }, [onChange]);
   
           return (
             <div
-              onClick={() => (null)}
+              onClick={() => (document.getElementById('fileInput') as HTMLInputElement).click()}
               className="
                 relative
                 cursor-pointer
@@ -43,6 +50,13 @@ declare global {
               <TbPhotoPlus
                 size={50}
               />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleUpload}
+                id="fileInput"
+                style={{ display: 'none' }}
+              />
               <div className="font-semibold text-lg">
                 Click to upload
               </div>
@@ -58,7 +72,7 @@ declare global {
                 </div>
               )}
             </div>
-          ) 
+          )
   }
   
   export default ImageUpload;
