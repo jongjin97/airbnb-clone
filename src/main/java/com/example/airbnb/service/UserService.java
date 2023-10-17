@@ -5,7 +5,7 @@ import com.example.airbnb.config.jwt.JwtTokenUtil;
 import com.example.airbnb.dto.RequestSignin;
 import com.example.airbnb.dto.RequestUser;
 import com.example.airbnb.dto.ResponseUser;
-import com.example.airbnb.entity.User;
+import com.example.airbnb.document.User;
 import com.example.airbnb.errors.AccountAlreadyExistsException;
 import com.example.airbnb.errors.PhoneAlreadyExistsException;
 import com.example.airbnb.repository.UserRepository;
@@ -23,13 +23,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     @Transactional
     public ResponseUser signUp(RequestUser requestUser) throws Exception {
-        if(!requestUser.getPassword().equals(requestUser.getConfirmPassword()))
-            throw new Exception("password and confirm password does not match");
         Optional<User> findUser = userRepository.findByEmail(requestUser.getEmail());
         if(findUser.isPresent())
             throw new AccountAlreadyExistsException("Email already exists");
-        if(userRepository.existsByPhone(requestUser.getPhone()))
-            throw new PhoneAlreadyExistsException("Phone already exists");
 
         requestUser.setPassword(passwordEncoder.encode(requestUser.getPassword()));
         User user = new User(requestUser);

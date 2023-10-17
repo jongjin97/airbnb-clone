@@ -1,6 +1,6 @@
 package com.example.airbnb.config.auth;
 
-import com.example.airbnb.entity.User;
+import com.example.airbnb.document.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +27,7 @@ public class UserDetailsImpl implements UserDetails {
         return user;
     }
 
-    public Long getId() {
+    public String getId() {
         return user.getId();
     }
     @Override

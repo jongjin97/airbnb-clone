@@ -1,7 +1,6 @@
 package com.example.airbnb.errors;
 
 import com.example.airbnb.utils.ApiUtils;
-import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -57,7 +56,6 @@ public class GeneralExceptionHandler {
     @ExceptionHandler({
             IllegalArgumentException.class,
             IllegalStateException.class,
-            ConstraintViolationException.class,
             MethodArgumentNotValidException.class
     })
     public ResponseEntity<?> handleBadRequestException(Exception e) {

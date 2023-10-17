@@ -1,29 +1,23 @@
-package com.example.airbnb.entity;
+package com.example.airbnb.document;
 
 import com.example.airbnb.dto.RequestUser;
 import com.example.airbnb.enums.Role;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
-@Table(name = "user")
+@Document(collection = "users")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends EntityTime{
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
+    private String id;
     private String name;
-    @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
     private String role;
 
 

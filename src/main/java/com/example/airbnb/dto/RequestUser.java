@@ -12,8 +12,5 @@ public class RequestUser {
     private String name;
     private String email;
     private String password;
-    private String confirmPassword;
-    private String phone;
-    private String address;
     private String role;
 }

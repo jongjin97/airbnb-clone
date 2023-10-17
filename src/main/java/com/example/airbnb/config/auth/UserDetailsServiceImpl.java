@@ -1,7 +1,6 @@
 package com.example.airbnb.config.auth;
 
-import com.example.airbnb.config.auth.UserDetailsImpl;
-import com.example.airbnb.entity.User;
+import com.example.airbnb.document.User;
 import com.example.airbnb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
