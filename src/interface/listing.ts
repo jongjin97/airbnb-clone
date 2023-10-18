@@ -18,3 +18,14 @@ export interface Listing {
   user: ResponseUser; // Assuming User interface is defined
   reservations?: Reservation[]; // Assuming Reservation interface is defined
 }
+
+export interface IListingsParams {
+  userId?: string;
+  guestCount?: number;
+  roomCount?: number;
+  bathroomCount?: number;
+  startDate?: string;
+  endDate?: string;
+  locationValue?: string;
+  category?: string;
+}

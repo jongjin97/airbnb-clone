@@ -1,12 +1,13 @@
-import { Routes, Route, Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Container from "src/components/Container";
+import HomePage from "src/page/HomePage";
 
 
 function PageRoute(){
     return (
-      <div>
         <Routes>
+          <Route path="/" element={<HomePage/>} />
         </Routes>
-        </div>
     );
 };
 export default PageRoute;

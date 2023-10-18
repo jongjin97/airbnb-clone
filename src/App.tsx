@@ -1,16 +1,19 @@
 import './App.css';
 import Navbar from './components/navbar/Navbar';
-import { BrowserRouter } from 'react-router-dom';
 import ToasterProvider from './providers/ToasterProvider';
 import ModalsProvider from './providers/ModalsProvider';
+import PageRoute from './router/PageRoute';
 
 function App() {
   return (
-    <BrowserRouter>
-      <ToasterProvider />
-      <ModalsProvider />
-      <Navbar/>
-    </BrowserRouter>
+    <>
+        <ToasterProvider />
+        <ModalsProvider />
+        <Navbar/>
+        <div className="pb-20 pt-28"> 
+          <PageRoute/>
+        </div>
+    </>
   );
 }
 

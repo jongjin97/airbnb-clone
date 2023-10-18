@@ -8,7 +8,7 @@ import CountrySelect, { CountrySelectValue } from '../inputs/CountrySelect';
 import { useAppDispatch, useAppSelector } from 'src/app/hooks';
 import { closeSearchModal } from 'src/features/modal/SearchModalAction';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import qs from 'qs';
+import qs from 'query-string';
 import { formatISO } from 'date-fns';
 const Map = lazy(() => import('../Map'));
 enum STEPS {
@@ -75,11 +75,11 @@ enum STEPS {
         updatedQuery.endDate = formatISO(dateRange.endDate);
       }
   
-      const url = qs.stringify({
+      const url = qs.stringifyUrl({
         url: '/',
         query: updatedQuery,
-      }, { skipNulls: true });
-  
+      }, { skipNull: true });
+      console.log(updatedQuery);
       setStep(STEPS.LOCATION);
       dispatch(closeSearchModal());
       router(url);

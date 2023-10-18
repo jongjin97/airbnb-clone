@@ -1,5 +1,7 @@
+import qs from "query-string";
 import { useCallback } from "react";
 import { IconType } from "react-icons";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 interface CategoryBoxProps {
     icon: IconType,
@@ -12,33 +14,31 @@ interface CategoryBoxProps {
     label,
     selected,
   }) => {
-    // const router = useRouter();
-    // const params = useSearchParams();
-  
+    const router = useNavigate();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
     const handleClick = useCallback(() => {
-    //   let currentQuery = {};
+      let currentQuery = {};
+      console.log(params);
+      if (params) {
+        currentQuery = qs.parse(params.toString())
+      }
+
+      const updatedQuery: any = {
+        ...currentQuery,
+        category: label
+      }
+      if (params?.get('category') === label) {
+        delete updatedQuery.category;
+      }
       
-    //   if (params) {
-    //     currentQuery = qs.parse(params.toString())
-    //   }
-  
-    //   const updatedQuery: any = {
-    //     ...currentQuery,
-    //     category: label
-    //   }
-  
-    //   if (params?.get('category') === label) {
-    //     delete updatedQuery.category;
-    //   }
-  
-    //   const url = qs.stringifyUrl({
-    //     url: '/',
-    //     query: updatedQuery
-    //   }, { skipNull: true });
-  
-    //   router.push(url);
-    // }, [label, router, params]);
-    }, []);
+      const url = qs.stringifyUrl({
+        url: '/',
+        query: updatedQuery
+      }, { skipNull: true });
+      
+      router(url);
+    }, [label, router, params]);
   
     return ( 
       <div
