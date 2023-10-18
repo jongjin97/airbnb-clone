@@ -16,19 +16,20 @@ interface CategoryBoxProps {
   }) => {
     const router = useNavigate();
     const location = useLocation();
-    const params = new URLSearchParams(location.search);
+    const [URLSearchParams, SetURLSearchParams] = useSearchParams();;
+
     const handleClick = useCallback(() => {
+      console.log(URLSearchParams);
       let currentQuery = {};
-      console.log(params);
-      if (params) {
-        currentQuery = qs.parse(params.toString())
+      if (URLSearchParams) {
+        currentQuery = qs.parse(URLSearchParams.toString())
       }
 
       const updatedQuery: any = {
         ...currentQuery,
         category: label
       }
-      if (params?.get('category') === label) {
+      if (URLSearchParams?.get('category') === label) {
         delete updatedQuery.category;
       }
       
@@ -38,7 +39,7 @@ interface CategoryBoxProps {
       }, { skipNull: true });
       
       router(url);
-    }, [label, router, params]);
+    }, [label, router, URLSearchParams]);
   
     return ( 
       <div

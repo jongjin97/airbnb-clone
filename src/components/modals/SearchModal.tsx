@@ -20,7 +20,7 @@ enum STEPS {
   const SearchModal = () => {
     const router = useNavigate();
     const searchModal = useAppSelector((state) => state.search.isOpen);
-    const params = useSearchParams();
+    const [URLSearchParams, SetURLSearchParams] = useSearchParams();
     const dispatch = useAppDispatch();
     const [step, setStep] = useState(STEPS.LOCATION);
     const [location, setLocation] = useState<CountrySelectValue>();
@@ -55,8 +55,8 @@ enum STEPS {
   
       let currentQuery = {};
   
-      if (params) {
-        currentQuery = qs.parse(params.toString())
+      if (URLSearchParams) {
+        currentQuery = qs.parse(URLSearchParams.toString())
       }
   
       const updatedQuery: any = {
@@ -94,7 +94,7 @@ enum STEPS {
       dateRange,
       onNext,
       bathroomCount,
-      params
+      URLSearchParams
     ]);
     const handleCloseModal = useCallback(() => {
         dispatch(closeSearchModal());
