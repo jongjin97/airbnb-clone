@@ -43,6 +43,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	// https://mvnrepository.com/artifact/commons-io/commons-io
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+// https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+	implementation 'org.hibernate:hibernate-core:6.3.1.Final'
 
 }
 

@@ -14,12 +14,13 @@ public class RequestAccommodation {
     private int bathroomCount;
     private String category;
     private String description;
+    private String title;
     private List<String> facility;
     private int guestCount;
     private int roomCount;
     private List<List<String>> imageSrc;
     private RequestLocation location;
-
+    private int price;
     public Accommodation toAccommodation(){
         return Accommodation.builder()
                 .bathroomCount(bathroomCount)
@@ -27,9 +28,11 @@ public class RequestAccommodation {
                 .description(description)
                 .facility(facility)
                 .guestCount(guestCount)
+                .title(title)
                 .roomCount(roomCount)
                 .imageSrc(imageSrc)
                 .location(location)
+                .price(price)
                 .build();
     }
 }
