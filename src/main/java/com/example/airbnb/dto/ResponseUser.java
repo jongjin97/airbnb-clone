@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,9 +17,11 @@ public class ResponseUser {
     private String email;
     private String role;
     private String token;
+    private List<String> favorites;
     public ResponseUser(User user){
         this.name = user.getName();
         this.email = user.getEmail();
         this.role = user.getRole();
+        this.favorites = user.getFavorites();
     }
 }

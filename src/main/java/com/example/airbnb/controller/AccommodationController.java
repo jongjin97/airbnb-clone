@@ -1,7 +1,6 @@
 package com.example.airbnb.controller;
 
 import com.example.airbnb.config.auth.UserDetailsImpl;
-import com.example.airbnb.document.Accommodation;
 import com.example.airbnb.dto.RequestAccommodation;
 import com.example.airbnb.dto.ResponseAccommodation;
 import com.example.airbnb.service.AccommodationService;
@@ -12,6 +11,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
 import static com.example.airbnb.utils.ApiUtils.ApiResult;
 import static com.example.airbnb.utils.ApiUtils.success;
 @RestController
@@ -35,8 +36,15 @@ public class AccommodationController {
     }
 
     @GetMapping("/lists")
-    public ApiResult<List<ResponseAccommodation>> getAccommodationList(@AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
-        List<ResponseAccommodation> accommodationList = accommodationService.findAllAccommodation();
+    public ApiResult<List<ResponseAccommodation>> getAccommodationList(@AuthenticationPrincipal UserDetailsImpl userDetails
+            , @RequestParam Map<String, String> requestParam) throws Exception {
+        List<ResponseAccommodation> accommodationList = accommodationService.findAllByParam(requestParam);
         return success(accommodationList);
+    }
+
+    @GetMapping("/{id}")
+    public ApiResult<ResponseAccommodation> getAccommodation(@PathVariable String id) throws Exception {
+        ResponseAccommodation responseAccommodation = accommodationService.findById(id);
+        return success(responseAccommodation);
     }
 }

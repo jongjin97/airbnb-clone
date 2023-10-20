@@ -23,9 +23,9 @@ public class User {
     private String email;
     private String password;
     private String role;
-
+    private List<String> favorites;
     @DBRef
-    private List<Accommodation> accommodations; // Collection of Accommodation documents <Accommodation>
+    private List<Accommodation> accommodation; // Collection of Accommodation documents <Accommodation>
     @DBRef
     private List<Reservation> reservations; // Collection of Reservation documents <Reservation>
     public User(RequestUser requestUser){
@@ -33,7 +33,7 @@ public class User {
         this.email = requestUser.getEmail();
         this.password = requestUser.getPassword();
         this.role = Role.ROLE_USER.getRole();
-        accommodations = new ArrayList<>();
+        accommodation = new ArrayList<>();
         reservations = new ArrayList<>();
         // this.accommodations.add(accommodation)
     }

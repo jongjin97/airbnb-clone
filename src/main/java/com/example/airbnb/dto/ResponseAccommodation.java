@@ -27,6 +27,7 @@ public class ResponseAccommodation {
     private RequestLocation location;
     private int price;
     private ResponseUser user;
+    private List<ResponseReservation> reservation;
 
     public ResponseAccommodation(Accommodation accommodation) {
         this.id = accommodation.getId();
@@ -41,5 +42,7 @@ public class ResponseAccommodation {
         this.price = accommodation.getPrice();
         this.imageSrc = accommodation.getImageSrc();
         this.user = new ResponseUser(accommodation.getUser());
+        this.reservation = accommodation.getReservation().stream().map(ResponseReservation::new).toList();
+        // convert Reservation to ResponseReservation (recursive call)
     }
 }

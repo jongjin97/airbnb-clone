@@ -30,4 +30,6 @@ public class Accommodation {
 
     @DBRef
     private User user;
+    @DBRef
+    private List<Reservation> reservation;
 }
