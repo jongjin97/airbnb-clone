@@ -5,11 +5,11 @@ import useCountries from "src/hooks/useCountries";
 import { ResponseUser } from "src/interface/auth";
 import { useNavigate } from "react-router-dom";
 import HeartButton from "../HeartButton";
-import { Listing } from "src/interface/listing";
+import { Listing, ResponseListing } from "src/interface/listing";
 import { Reservation } from "src/interface/reservation";
 
 interface ListingCardProps {
-    data: Listing;
+    data: ResponseListing;
     reservation?: Reservation;
     onAction?: (id: string) => void;
     disabled?: boolean;
@@ -30,7 +30,7 @@ interface ListingCardProps {
     const router = useNavigate();
     const { getByValue } = useCountries();
   
-    const location = getByValue(data.locationValue);
+    const location = getByValue(data.location.value);
   
     const handleCancel = useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -86,7 +86,7 @@ interface ListingCardProps {
                 group-hover:scale-110 
                 transition
               "
-              src={data.imageSrc}
+              src={`data:image/jpeg;base64,${data.imageByte}`}
               alt="Listing"
             />
             <div className="

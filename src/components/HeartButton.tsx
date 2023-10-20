@@ -3,7 +3,7 @@ import useFavorite from "src/hooks/useFavorite";
 import { ResponseUser } from "src/interface/auth";
 
 interface HeartButtonProps {
-    listingId: number
+    listingId: string
     currentUser?: ResponseUser | null
   }
   

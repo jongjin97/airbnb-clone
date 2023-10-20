@@ -7,7 +7,7 @@ interface ListingHeadProps {
     title: string;
     locationValue: string;
     imageSrc: string;
-    id: number;
+    id: string;
     currentUser?: ResponseUser | null
   }
   

@@ -1,10 +1,11 @@
+import { useEffect, useState } from "react";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import getListings from "src/api/listing.api";
 import { useAppSelector } from "src/app/hooks";
 import Container from "src/components/Container";
 import EmptyState from "src/components/EmptyState";
 import ListingCard from "src/components/listings/ListingCard";
-import { IListingsParams } from "src/interface/listing";
+import { IListingsParams, ResponseListing } from "src/interface/listing";
 
 function convertSearchParamsToParamsObject(params: URLSearchParams): IListingsParams {
   const listingsParams: IListingsParams = {};
@@ -39,13 +40,21 @@ function convertSearchParamsToParamsObject(params: URLSearchParams): IListingsPa
     const endDateParam = params.get('endDate');
     listingsParams.endDate = endDateParam ? endDateParam : undefined;
   }
-  console.log(listingsParams);
   return listingsParams;
 }
  function Home(){
     const [URLSearchParams, SetURLSearchParams] = useSearchParams();
-    const listings = getListings(convertSearchParamsToParamsObject(URLSearchParams));
-    if (URLSearchParams.size === 0) {
+    const [listings, setListings] = useState<ResponseListing[]>();
+    const currentUser = useAppSelector(state => state.auth.user);
+    useEffect(() => {
+      getListings(convertSearchParamsToParamsObject(URLSearchParams))
+      .then(res => {
+        console.log(res.data.response);
+        setListings(res.data.response)})
+      .catch(err => console.log(err));
+    },[]);
+
+    if (listings?.length === 0) {
       return (
           <EmptyState showReset />
       );
@@ -65,14 +74,13 @@ function convertSearchParamsToParamsObject(params: URLSearchParams): IListingsPa
               gap-8
             "
           >
-            {/* {listings.map((listing: any) => (
+            {listings?.map((listing: any) => (
               <ListingCard
                 currentUser={currentUser}
                 key={listing.id}
                 data={listing}
               />
-            ))} */}
-            <h1>test</h1>
+            ))}
           </div>
         </Container>
     )

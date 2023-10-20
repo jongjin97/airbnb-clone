@@ -6,7 +6,7 @@ import { openLoginModal } from "src/features/modal/LoginModalAction";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 
 interface IUseFavorite {
-    listingId: number;
+    listingId: string;
     currentUser?: ResponseUser | null
   }
   

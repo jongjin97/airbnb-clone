@@ -29,3 +29,24 @@ export interface IListingsParams {
   locationValue?: string;
   category?: string;
 }
+export type CountrySelectValue = {
+  flag: string;
+  label: string;
+  latlng: number[],
+  region: string;
+  value: string
+}
+export interface ResponseListing{
+  id: string;
+  guestCount?: number;
+  roomCount?: number;
+  bathroomCount?: number;
+  title: string;
+  description: string;
+  price: number;
+  user: ResponseUser;
+  location: CountrySelectValue;
+  category: string;
+  facility: string[];
+  imageByte: Uint8Array;
+}
