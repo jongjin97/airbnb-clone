@@ -2,7 +2,7 @@ import { ResponseUser } from "./auth";
 import { Reservation } from "./reservation";
 
 export interface Listing {
-  id: number;
+  id: string;
   title: string;
   description: string;
   imageSrc: string;
@@ -14,7 +14,8 @@ export interface Listing {
   locationValue: string;
   userId: string;
   price: number;
-
+  imageByte: Uint8Array;
+  location: CountrySelectValue;
   user: ResponseUser; // Assuming User interface is defined
   reservations?: Reservation[]; // Assuming Reservation interface is defined
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
-import getListings from "src/api/listing.api";
+import { getListings } from "src/api/listing.api";
 import { useAppSelector } from "src/app/hooks";
 import Container from "src/components/Container";
 import EmptyState from "src/components/EmptyState";
@@ -52,7 +52,7 @@ function convertSearchParamsToParamsObject(params: URLSearchParams): IListingsPa
         console.log(res.data.response);
         setListings(res.data.response)})
       .catch(err => console.log(err));
-    },[]);
+    },[URLSearchParams]);
 
     if (listings?.length === 0) {
       return (

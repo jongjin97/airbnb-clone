@@ -1,7 +1,9 @@
+import { httpApi } from "src/api/http.api";
 import { ResponseUser } from "../interface/auth";
 
 export const persistToken = (token: string) => {
     localStorage.setItem('accessToken', token.replace('Bearer ', ''));
+    httpApi.defaults.headers.common['Authorization'] = `Bearer ${readToken()}`;
 }
 
 export const readToken = (): string | null => {

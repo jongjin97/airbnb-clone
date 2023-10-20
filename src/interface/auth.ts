@@ -15,5 +15,5 @@ export interface ResponseUser {
     nickname: string,
     role: string,
     img: Uint8Array,
-    favoriteIds: string[],
+    favorites: string[],
 }

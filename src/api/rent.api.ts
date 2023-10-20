@@ -6,8 +6,3 @@ export const createRent = (reqeustAccommodate: FieldValues) => {
         return result;
     })
 }
-
-export const login = (requestSignIn: FieldValues): Promise<any> => 
-    httpApi.post<any>('/user/signin', { ...requestSignIn }).then((result) => {
-        return result;
-    }); 

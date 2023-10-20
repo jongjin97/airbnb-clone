@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RequestSignIn, RequestSignUp } from "../../interface/auth";
+import { RequestSignIn, RequestSignUp, ResponseUser } from "../../interface/auth";
 import { login, regist } from "../../api/auth.api";
 import { setUser } from "./authReducer";
 import { deleteToken, deleteUser, persistToken } from "../../service/localStorage.service";
@@ -21,7 +21,9 @@ export const doLogin = createAsyncThunk('auth/doLogin', async (requestSignIn: Fi
     toast.error(callback.response.data.error.message);
     return callback;
   }));
-
+  export const updateUser = createAsyncThunk('auth/doUpdate', async (responseUser: any, {dispatch}) =>
+    dispatch(setUser(responseUser))
+  );
 // export const doSignUp = createAsyncThunk('auth/doSignUp', async (requestSignUp: RequestSignUp) =>
 //   regist(requestSignUp));
 
