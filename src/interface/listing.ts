@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 import { ResponseUser } from "./auth";
 import { Reservation } from "./reservation";
 
@@ -16,6 +17,7 @@ export interface Listing {
   price: number;
   imageByte: Uint8Array;
   location: CountrySelectValue;
+  facility: string[]
   user: ResponseUser; // Assuming User interface is defined
   reservations?: Reservation[]; // Assuming Reservation interface is defined
 }

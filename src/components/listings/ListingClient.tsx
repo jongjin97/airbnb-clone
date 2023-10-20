@@ -13,6 +13,7 @@ import { openLoginModal } from "src/features/modal/LoginModalAction";
 import { ResponseUser } from "src/interface/auth";
 import { Listing } from "src/interface/listing";
 import { Reservation } from "src/interface/reservation";
+import { facilities } from './../Facilitie';
 
 const initialDateRange = {
     startDate: new Date(),
@@ -55,11 +56,16 @@ const initialDateRange = {
        return categories.find((items) => 
         items.label === listing.category);
     }, [listing.category]);
-  
+
+    const facility = useMemo(() => {
+      return listing.facility.map((facilityLabel) =>
+      facilities.find((item) => item.label === facilityLabel));
+    }, [listing.facility]);
+
     const [isLoading, setIsLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(listing.price);
     const [dateRange, setDateRange] = useState<Range>(initialDateRange);
-  
+
     const onCreateReservation = useCallback(() => {
         if (!currentUser) {
           return dispatch(openLoginModal());
@@ -141,6 +147,7 @@ const initialDateRange = {
                 guestCount={listing.guestCount}
                 bathroomCount={listing.bathroomCount}
                 locationValue={listing.location.value}
+                facility={facility}
               />
               <div 
                 className="

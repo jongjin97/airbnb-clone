@@ -4,7 +4,9 @@ import { ResponseUser } from "src/interface/auth";
 import { IconType } from "react-icons";
 import ListingCategory from "./ListingCategory";
 import { Suspense, lazy } from "react";
+import { facilities } from "src/interface/facility";
 const Map = lazy(() => import('../Map'));
+
 interface ListingInfoProps {
     user: ResponseUser,
     description: string;
@@ -17,6 +19,11 @@ interface ListingInfoProps {
       description: string;
     } | undefined
     locationValue: string;
+    facility: ({
+      label: string;
+      icon: IconType;
+      description: string;
+  } | undefined)[];
   }
   
   const ListingInfo: React.FC<ListingInfoProps> = ({
@@ -27,6 +34,7 @@ interface ListingInfoProps {
     bathroomCount,
     category,
     locationValue,
+    facility,
   }) => {
     const { getByValue } = useCountries();
   
@@ -80,6 +88,25 @@ interface ListingInfoProps {
         <div className="
         text-lg font-light text-neutral-500">
           {description}
+        </div>
+        <hr />
+        <div >
+          <div className="
+          text-xl 
+          font-semibold 
+          flex 
+          flex-row 
+          items-center
+          gap-2">Facilities</div>
+          {facility && facility.map((item) => (
+            item && (
+              <ListingCategory 
+                icon={item.icon}
+                label={item.label}
+                description={item.description}
+              />
+            )
+          ))}
         </div>
         <hr />
         <Suspense>
