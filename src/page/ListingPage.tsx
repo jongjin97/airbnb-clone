@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getListingsById } from "src/api/listing.api";
 import { useAppSelector } from "src/app/hooks";
 import EmptyState from "src/components/EmptyState";
-import ListingClient from "src/components/listings/ListingClient";
+import ListingClient from "src/components/clients/ListingClient";
 import { ResponseUser } from "src/interface/auth";
 import { Listing } from "src/interface/listing";
 import { Reservation } from "src/interface/reservation";

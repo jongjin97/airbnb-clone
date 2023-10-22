@@ -12,6 +12,7 @@ export const readToken = (): string | null => {
 
 export const deleteToken = () => {
     localStorage.removeItem('accessToken');
+    httpApi.defaults.headers.common['Authorization'] = ``;
 }
 
 

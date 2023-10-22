@@ -86,7 +86,7 @@ interface ListingCardProps {
                 group-hover:scale-110 
                 transition
               "
-              src={`data:image/jpeg;base64,${data.imageByte}`}
+              src={`data:image/jpeg;base64,${data.imageByte[0]}`}
               alt="Listing"
             />
             <div className="

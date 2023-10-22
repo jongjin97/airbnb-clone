@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Container from "../Container";
-import ListingHead from "./ListingHead";
-import ListingInfo from "./ListingInfo";
-import ListingReservation from "./ListingReservation";
+import ListingHead from "../listings/ListingHead";
+import ListingInfo from "../listings/ListingInfo";
+import ListingReservation from "../listings/ListingReservation";
 import { differenceInDays, eachDayOfInterval } from "date-fns";
 import toast from "react-hot-toast";
 import { categories } from "../navbar/Categories";
@@ -13,7 +13,9 @@ import { openLoginModal } from "src/features/modal/LoginModalAction";
 import { ResponseUser } from "src/interface/auth";
 import { Listing } from "src/interface/listing";
 import { Reservation } from "src/interface/reservation";
-import { facilities } from './../Facilitie';
+import { facilities } from '../Facilitie';
+import { httpApi } from "src/api/http.api";
+import { createReservation } from "src/api/reservation.api";
 
 const initialDateRange = {
     startDate: new Date(),
@@ -70,25 +72,22 @@ const initialDateRange = {
         if (!currentUser) {
           return dispatch(openLoginModal());
         }
-        // setIsLoading(true);
-  
-        // axios.post('/api/reservations', {
-        //   totalPrice,
-        //   startDate: dateRange.startDate,
-        //   endDate: dateRange.endDate,
-        //   listingId: listing?.id
-        // })
-        // .then(() => {
-        //   toast.success('Listing reserved!');
-        //   setDateRange(initialDateRange);
-        //   router('/trips');
-        // })
-        // .catch(() => {
-        //   toast.error('Something went wrong.');
-        // })
-        // .finally(() => {
-        //   setIsLoading(false);
-        // })
+        setIsLoading(true);
+        createReservation(totalPrice,
+          dateRange.startDate,
+          dateRange.endDate,
+          listing?.id)
+        .then(() => {
+          toast.success('Listing reserved!');
+          setDateRange(initialDateRange);
+          router('/trips');
+        })
+        .catch(() => {
+          toast.error('Something went wrong.');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        })
     },
     [
       totalPrice, 
@@ -125,7 +124,7 @@ const initialDateRange = {
           <div className="flex flex-col gap-6">
             <ListingHead
               title={listing.title}
-              imageSrc={`data:image/jpeg;base64,${listing.imageByte}`}
+              imageSrc={`data:image/jpeg;base64,${listing.imageByte[0]}`}
               locationValue={listing.locationValue}
               id={listing.id}
               currentUser={currentUser}

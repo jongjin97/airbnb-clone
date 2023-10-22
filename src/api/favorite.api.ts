@@ -8,3 +8,7 @@ export function deleteFavorite(id : string){
 export function saveFavorite(id : string){
     return httpApi.post(`/favorite/${id}`);
 }
+
+export function getFavorite(){
+    return httpApi.get('/favorite');
+}
