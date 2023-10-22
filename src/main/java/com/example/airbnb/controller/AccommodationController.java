@@ -1,6 +1,7 @@
 package com.example.airbnb.controller;
 
 import com.example.airbnb.config.auth.UserDetailsImpl;
+import com.example.airbnb.document.User;
 import com.example.airbnb.dto.RequestAccommodation;
 import com.example.airbnb.dto.ResponseAccommodation;
 import com.example.airbnb.service.AccommodationService;
@@ -34,7 +35,21 @@ public class AccommodationController {
         accommodationService.createAccommodation(RequestAccommodation, userDetails.getUser());
         return success("success");
     }
-
+    @GetMapping
+    public ApiResult<List<ResponseAccommodation>> getAccommodationList(@AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception {
+        User user = userDetails.getUser();
+        List<ResponseAccommodation> accommodationList = user.getAccommodation().stream()
+                .map(accommodation -> {
+                    try {
+                        ResponseAccommodation responseAccommodation = new ResponseAccommodation(accommodation);
+                        responseAccommodation.setImageByte(fileService.downloadFile(accommodation.getImageSrc()));
+                        return responseAccommodation;
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }).toList();
+        return success(accommodationList);
+    }
     @GetMapping("/lists")
     public ApiResult<List<ResponseAccommodation>> getAccommodationList(@AuthenticationPrincipal UserDetailsImpl userDetails
             , @RequestParam Map<String, String> requestParam) throws Exception {
@@ -46,5 +61,10 @@ public class AccommodationController {
     public ApiResult<ResponseAccommodation> getAccommodation(@PathVariable String id) throws Exception {
         ResponseAccommodation responseAccommodation = accommodationService.findById(id);
         return success(responseAccommodation);
+    }
+    @DeleteMapping("/{id}")
+    public ApiResult<String> deleteAccommodation(@PathVariable String id) throws Exception {
+        accommodationService.deleteAccommodation(id);
+        return success("success");
     }
 }

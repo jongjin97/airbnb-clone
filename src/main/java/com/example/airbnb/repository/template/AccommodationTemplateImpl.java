@@ -1,10 +1,16 @@
 package com.example.airbnb.repository.template;
 
 import com.example.airbnb.document.Accommodation;
+import com.example.airbnb.document.Reservation;
+import com.example.airbnb.document.User;
+import com.example.airbnb.repository.UserRepository;
+import com.mongodb.BasicDBObject;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +21,7 @@ import java.util.Map;
 public class AccommodationTemplateImpl implements AccommodationTemplate{
 
     private final MongoTemplate mongoTemplate;
+    private final UserRepository userRepository;
     @Override
     public List<Accommodation> findAllByParam(Map<String, String> accommodationParam) {
         Query query = new Query();
@@ -44,16 +51,32 @@ public class AccommodationTemplateImpl implements AccommodationTemplate{
                     Criteria.where("reservations.checkInDate").lte(accommodationParam.get("endDate"))
                             .and("reservations.checkOutDate").gte(accommodationParam.get("startDate"))
             );
-//            Criteria dateRange1 = Criteria.where("reservations.endDate").gte(accommodationParam.get("startDate"))
-//                    .andOperator(Criteria.where("reservations.startDate").lte(accommodationParam.get("startDate")));
-//
-//            Criteria dateRange2 = Criteria.where("reservations.startDate").lte(accommodationParam.get("endDate"))
-//                    .andOperator(Criteria.where("reservations.endDate").gte(accommodationParam.get("endDate")));
-//
-//            Criteria reservationNotOverlap = new Criteria().orOperator(dateRange1, dateRange2);
-//
-//            query.addCriteria(new Criteria().norOperator(reservationNotOverlap));
         }
         return mongoTemplate.find(query, Accommodation.class);
+    }
+
+    @Override
+    public void AlldeleteAccomById(String id) {
+        Accommodation accommodation = mongoTemplate.findById(id, Accommodation.class);
+
+        Query reservationQuery = new Query(Criteria.where("accommodation.$id").is(new ObjectId(id)));
+        List<Reservation> reservations = mongoTemplate.findAllAndRemove(reservationQuery, Reservation.class);
+
+        // 관련된 사용자의 reservations 필드 업데이트
+        for (Reservation reservation : reservations) {
+            User user = reservation.getUser();
+            user.getReservations().removeIf(r -> r.getId().equals(reservation.getId()));
+            userRepository.save(user);
+        }
+
+        Query userQuery = new Query(Criteria.where("accommodation.$id").is(new ObjectId(id)));
+        Update userUpdate = new Update().pull("accommodation", new BasicDBObject("$id", new ObjectId(id)));
+        mongoTemplate.updateMulti(userQuery, userUpdate, User.class);
+
+        Query userQuery2 = new Query(Criteria.where("favorites").is(id));
+        Update userUpdate2 = new Update().pull("favorites", id);
+        mongoTemplate.updateMulti(userQuery2, userUpdate2, User.class);
+
+        mongoTemplate.remove(accommodation);
     }
 }

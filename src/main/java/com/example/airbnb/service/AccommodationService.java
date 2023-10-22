@@ -5,6 +5,7 @@ import com.example.airbnb.document.User;
 import com.example.airbnb.dto.RequestAccommodation;
 import com.example.airbnb.dto.ResponseAccommodation;
 import com.example.airbnb.repository.AccommodationRepository;
+import com.example.airbnb.repository.ReservationRepository;
 import com.example.airbnb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Map;
 public class AccommodationService {
     private final AccommodationRepository accommodationRepository;
     private final UserRepository userRepository;
+    private final ReservationRepository reservationRepository;
     private final FileService fileService;
     @Transactional
     public void createAccommodation(RequestAccommodation requestAccommodation, User user) {
@@ -45,5 +47,10 @@ public class AccommodationService {
         ResponseAccommodation responseAccommodation = new ResponseAccommodation(accommodation);
         responseAccommodation.setImageByte(fileService.downloadFile(responseAccommodation.getImageSrc()));
         return responseAccommodation;
+    }
+
+    @Transactional
+    public void deleteAccommodation(String id) throws Exception {
+        accommodationRepository.AlldeleteAccomById(id);
     }
 }

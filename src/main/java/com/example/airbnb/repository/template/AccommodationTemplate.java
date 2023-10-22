@@ -8,4 +8,6 @@ import java.util.Map;
 public interface AccommodationTemplate {
 
     List<Accommodation> findAllByParam(Map<String,String> accommodationParam);
+
+    void AlldeleteAccomById(String id);
 }
