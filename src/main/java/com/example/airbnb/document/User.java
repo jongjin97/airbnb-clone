@@ -33,8 +33,9 @@ public class User {
         this.email = requestUser.getEmail();
         this.password = requestUser.getPassword();
         this.role = Role.ROLE_USER.getRole();
-        accommodation = new ArrayList<>();
-        reservations = new ArrayList<>();
+        this.favorites = new ArrayList<>();
+        this.accommodation = new ArrayList<>();
+        this.reservations = new ArrayList<>();
         // this.accommodations.add(accommodation)
     }
 }

@@ -14,16 +14,16 @@ import java.util.Date;
 public class ResponseReservation {
     private String id;
     private String accommodationId;
-    private Date checkInDate;
-    private Date checkOutDate;
+    private Date startDate;
+    private Date endDate ;
     private String status;
     private int totalPrice;
-
+    private ResponseAccommodation listing;
     public ResponseReservation(Reservation reservation) {
         this.id = reservation.getId();
         this.accommodationId = reservation.getAccommodation().getId();
-        this.checkInDate = reservation.getCheckInDate();
-        this.checkOutDate = reservation.getCheckOutDate();
+        this.startDate = reservation.getStartDate();
+        this.endDate  = reservation.getEndDate();
         this.status = reservation.getStatus();
         this.totalPrice = reservation.getTotalPrice();
     }

@@ -29,6 +29,7 @@ public class UserService {
 
         requestUser.setPassword(passwordEncoder.encode(requestUser.getPassword()));
         User user = new User(requestUser);
+
         User result = userRepository.save(user);
         ResponseUser responseUser = new ResponseUser(result);
         return responseUser;

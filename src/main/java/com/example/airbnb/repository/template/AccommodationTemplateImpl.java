@@ -26,29 +26,33 @@ public class AccommodationTemplateImpl implements AccommodationTemplate{
         }
 
         if (accommodationParam.get("roomCount") != null && Integer.parseInt(accommodationParam.get("roomCount")) > 0) {
-            query.addCriteria(Criteria.where("roomCount").gte(accommodationParam.get("roomCount")));
+            query.addCriteria(Criteria.where("roomCount").gte(Integer.parseInt(accommodationParam.get("roomCount"))));
         }
 
         if (accommodationParam.get("guestCount") != null && Integer.parseInt(accommodationParam.get("guestCount")) > 0) {
-            query.addCriteria(Criteria.where("guestCount").gte(accommodationParam.get("guestCount")));
+            query.addCriteria(Criteria.where("guestCount").gte(Integer.parseInt(accommodationParam.get("guestCount"))));
         }
 
         if (accommodationParam.get("bathroomCount") != null && Integer.parseInt(accommodationParam.get("bathroomCount")) > 0) {
-            query.addCriteria(Criteria.where("bathroomCount").gte(accommodationParam.get("bathroomCount")));
+            query.addCriteria(Criteria.where("bathroomCount").gte(Integer.parseInt(accommodationParam.get("bathroomCount"))));
         }
         if (accommodationParam.get("locationValue") != null) {
-            query.addCriteria(Criteria.where("location.Value").is(accommodationParam.get("locationValue")));
+            query.addCriteria(Criteria.where("location.value").is(accommodationParam.get("locationValue")));
         }
         if (accommodationParam.get("startDate") != null && accommodationParam.get("endDate") != null){
-            Criteria dateRange1 = Criteria.where("reservations.endDate").gte(accommodationParam.get("startDate"))
-                    .andOperator(Criteria.where("reservations.startDate").lte(accommodationParam.get("startDate")));
-
-            Criteria dateRange2 = Criteria.where("reservations.startDate").lte(accommodationParam.get("endDate"))
-                    .andOperator(Criteria.where("reservations.endDate").gte(accommodationParam.get("endDate")));
-
-            Criteria reservationNotOverlap = new Criteria().orOperator(dateRange1, dateRange2);
-
-            query.addCriteria(new Criteria().norOperator(reservationNotOverlap));
+            query.addCriteria(
+                    Criteria.where("reservations.checkInDate").lte(accommodationParam.get("endDate"))
+                            .and("reservations.checkOutDate").gte(accommodationParam.get("startDate"))
+            );
+//            Criteria dateRange1 = Criteria.where("reservations.endDate").gte(accommodationParam.get("startDate"))
+//                    .andOperator(Criteria.where("reservations.startDate").lte(accommodationParam.get("startDate")));
+//
+//            Criteria dateRange2 = Criteria.where("reservations.startDate").lte(accommodationParam.get("endDate"))
+//                    .andOperator(Criteria.where("reservations.endDate").gte(accommodationParam.get("endDate")));
+//
+//            Criteria reservationNotOverlap = new Criteria().orOperator(dateRange1, dateRange2);
+//
+//            query.addCriteria(new Criteria().norOperator(reservationNotOverlap));
         }
         return mongoTemplate.find(query, Accommodation.class);
     }

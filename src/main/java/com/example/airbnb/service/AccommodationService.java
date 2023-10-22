@@ -30,7 +30,7 @@ public class AccommodationService {
         user.getAccommodation().add(savedAccommodation);
         userRepository.save(user);
     }
-
+    @Transactional
     public List<ResponseAccommodation> findAllByParam(Map<String, String> accommodationParam) throws Exception {
         List<Accommodation> accommodations = accommodationRepository.findAllByParam(accommodationParam);
         List<ResponseAccommodation> responseAccommodations = accommodations.stream().map(ResponseAccommodation::new).toList();
@@ -39,7 +39,7 @@ public class AccommodationService {
         }
         return responseAccommodations;
     }
-
+    @Transactional
     public ResponseAccommodation findById(String id) throws Exception {
         Accommodation accommodation = accommodationRepository.findById(id).orElseThrow();
         ResponseAccommodation responseAccommodation = new ResponseAccommodation(accommodation);

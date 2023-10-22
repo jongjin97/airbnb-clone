@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,8 +24,16 @@ class AccommodationRepositoryTest {
     }
 
     @Test
-    void findAccommodationById() {
-        List<Accommodation> lIst = accommodationRepository.findAll();
+    void findAccommodationByParam() {
+        Map<String, String> map = new HashMap<>();
+        map.put("category", "Windmills");
+        map.put("guestCount", "1");
+        map.put("bathroomCount", "1");
+        map.put("roomCount", "1");
+        map.put("locationValue" ,"AI");
+        map.put("startDate", "2022-10-01");
+        map.put("endDate", "2022-10-31");
+        List<Accommodation> lIst = accommodationRepository.findAllByParam(map);
         assertEquals(1, lIst.size());
     }
 
