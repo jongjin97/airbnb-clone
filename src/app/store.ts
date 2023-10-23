@@ -5,6 +5,7 @@ import registerModalReducer from 'src/features/modal/RegisterModalReducer';
 import loginModalReducer from 'src/features/modal/LoginModalReducer';
 import searchModalReducer from 'src/features/modal/SearchModalReducer';
 import rentModalReducer from 'src/features/modal/RentModalReducer';
+import messageModalReducer from 'src/features/modal/MessageModalReducer';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -13,6 +14,7 @@ export const store = configureStore({
     login: loginModalReducer,
     search: searchModalReducer,
     rent: rentModalReducer,
+    message: messageModalReducer,
   },
   //middleware: [thunk], // Redux Thunk 및 선택적으로 Redux Logger 미들웨어 추가
 });

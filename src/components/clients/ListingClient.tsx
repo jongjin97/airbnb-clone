@@ -16,6 +16,7 @@ import { Reservation } from "src/interface/reservation";
 import { facilities } from '../Facilitie';
 import { httpApi } from "src/api/http.api";
 import { createReservation } from "src/api/reservation.api";
+import { openMessageModal } from "src/features/modal/MessageModalAction";
 
 const initialDateRange = {
     startDate: new Date(),
@@ -39,9 +40,17 @@ const initialDateRange = {
     const loginModal = useAppSelector((state) => state.login.isOpen);
     const router = useNavigate();
     const dispatch = useAppDispatch();
+
+    const handleMessage = useCallback(() => {
+      dispatch(openMessageModal());
+    }, []);
+
     const disabledDates = useMemo(() => {
       let dates: Date[] = [];
-  
+      if(reservations === null){
+        return dates;
+
+      }
       reservations.forEach((reservation: any) => {
         const range = eachDayOfInterval({
           start: new Date(reservation.startDate),
@@ -147,6 +156,7 @@ const initialDateRange = {
                 bathroomCount={listing.bathroomCount}
                 locationValue={listing.location.value}
                 facility={facility}
+                openMessage={handleMessage}
               />
               <div 
                 className="
