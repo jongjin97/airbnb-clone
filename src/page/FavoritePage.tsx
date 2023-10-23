@@ -14,7 +14,7 @@ const FavoritePage = () => {
             setListings(data.data.response);
         })
     }, [])
-    if (listings === undefined) {
+    if (listings === undefined || listings.length === 0) {
       return (
           <EmptyState
             title="No favorites found"
