@@ -12,7 +12,7 @@ export interface RequestSignIn{
 export interface ResponseUser {
     email: string,
     id: string,
-    nickname: string,
+    name: string,
     role: string,
     img: Uint8Array,
     favorites: string[],
