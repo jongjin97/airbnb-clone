@@ -5,7 +5,6 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 @Document(collection = "accommodation")
@@ -31,5 +30,5 @@ public class Accommodation {
     @DBRef
     private User user;
     @DBRef
-    private List<Reservation> reservation;
+    private List<Reservation> reservations;
 }

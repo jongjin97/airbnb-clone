@@ -26,13 +26,11 @@ class AccommodationRepositoryTest {
     @Test
     void findAccommodationByParam() {
         Map<String, String> map = new HashMap<>();
-        map.put("category", "Windmills");
         map.put("guestCount", "1");
         map.put("bathroomCount", "1");
         map.put("roomCount", "1");
-        map.put("locationValue" ,"AI");
-        map.put("startDate", "2022-10-01");
-        map.put("endDate", "2022-10-31");
+        map.put("startDate", "2023-10-24T00:00:00+09:00");
+        map.put("endDate", "2023-10-25T00:00:00+09:00");
         List<Accommodation> lIst = accommodationRepository.findAllByParam(map);
         assertEquals(1, lIst.size());
     }

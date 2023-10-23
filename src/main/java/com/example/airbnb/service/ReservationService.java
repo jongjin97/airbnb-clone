@@ -4,15 +4,12 @@ import com.example.airbnb.document.Accommodation;
 import com.example.airbnb.document.Reservation;
 import com.example.airbnb.document.User;
 import com.example.airbnb.dto.RequestReservation;
-import com.example.airbnb.dto.ResponseReservation;
 import com.example.airbnb.repository.AccommodationRepository;
 import com.example.airbnb.repository.ReservationRepository;
 import com.example.airbnb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +25,7 @@ public class ReservationService {
         reservation.setUser(user);
 
         Reservation savedReservation = reservationRepository.save(reservation);
-        accommodation.getReservation().add(savedReservation);
+        accommodation.getReservations().add(savedReservation);
         accommodationRepository.save(accommodation);
         user.getReservations().add(savedReservation);
         userRepository.save(user);
@@ -38,7 +35,7 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId).get();
 
         Accommodation ac = accommodationRepository.findById(reservation.getAccommodation().getId()).get();
-        ac.getReservation().removeIf(res -> res.getId().equals(reservationId));
+        ac.getReservations().removeIf(res -> res.getId().equals(reservationId));
         accommodationRepository.save(ac);
 
         user.getReservations().removeIf(res -> res.getId().equals(reservationId));

@@ -13,6 +13,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -46,15 +49,33 @@ public class AccommodationTemplateImpl implements AccommodationTemplate{
         if (accommodationParam.get("locationValue") != null) {
             query.addCriteria(Criteria.where("location.value").is(accommodationParam.get("locationValue")));
         }
-        if (accommodationParam.get("startDate") != null && accommodationParam.get("endDate") != null){
-            query.addCriteria(
-                    Criteria.where("reservations.checkInDate").lte(accommodationParam.get("endDate"))
-                            .and("reservations.checkOutDate").gte(accommodationParam.get("startDate"))
+        if (accommodationParam.containsKey("startDate") && accommodationParam.containsKey("endDate")) {
+            String startDateStr = accommodationParam.get("startDate");
+            String endDateStr = accommodationParam.get("endDate");
+
+            Date startDate = parseDate(startDateStr);
+            Date endDate = parseDate(endDateStr);
+
+            // startDate와 endDate 사이에 예약이 없는 숙소를 검색합니다.
+            Criteria reservationCriteria = new Criteria().orOperator(
+                    Criteria.where("reservations").size(0), // 예약이 없는 경우
+                    Criteria.where("reservations.startDate").gt(endDate), // 예약 시작일이 endDate 이후인 경우
+                    Criteria.where("reservations.endDate").lt(startDate) // 예약 종료일이 startDate 이전인 경우
             );
+
+            query.addCriteria(reservationCriteria);
         }
         return mongoTemplate.find(query, Accommodation.class);
     }
-
+    private Date parseDate(String dateStr) {
+        SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd" );
+        try {
+            return formatter.parse(dateStr);
+        } catch (ParseException e) {
+            // 날짜 파싱 실패 시 처리할 로직 추가
+            return null;
+        }
+    }
     @Override
     public void AlldeleteAccomById(String id) {
         Accommodation accommodation = mongoTemplate.findById(id, Accommodation.class);

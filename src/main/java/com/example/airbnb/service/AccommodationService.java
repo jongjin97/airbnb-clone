@@ -27,7 +27,7 @@ public class AccommodationService {
         user = userRepository.findById(user.getId()).orElseThrow();
         Accommodation accommodation = requestAccommodation.toAccommodation();
         accommodation.setUser(user);
-        accommodation.setReservation(new ArrayList<>());
+        accommodation.setReservations(new ArrayList<>());
         Accommodation savedAccommodation = accommodationRepository.save(accommodation);
         user.getAccommodation().add(savedAccommodation);
         userRepository.save(user);

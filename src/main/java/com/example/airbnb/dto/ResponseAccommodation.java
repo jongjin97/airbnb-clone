@@ -1,12 +1,10 @@
 package com.example.airbnb.dto;
 
 import com.example.airbnb.document.Accommodation;
-import com.example.airbnb.document.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 @Getter
@@ -42,7 +40,7 @@ public class ResponseAccommodation {
         this.price = accommodation.getPrice();
         this.imageSrc = accommodation.getImageSrc();
         this.user = new ResponseUser(accommodation.getUser());
-        this.reservation = accommodation.getReservation().stream().map(ResponseReservation::new).toList();
+        this.reservation = accommodation.getReservations().stream().map(ResponseReservation::new).toList();
         // convert Reservation to ResponseReservation (recursive call)
     }
 }
