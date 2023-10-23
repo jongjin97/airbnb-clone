@@ -3,9 +3,8 @@ import Avatar from "../Avatar";
 import { ResponseUser } from "src/interface/auth";
 import { IconType } from "react-icons";
 import ListingCategory from "./ListingCategory";
-import { MouseEvent, Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import { facilities } from "src/interface/facility";
-import Button from "../Button";
 const Map = lazy(() => import('../Map'));
 
 interface ListingInfoProps {
@@ -25,7 +24,6 @@ interface ListingInfoProps {
       icon: IconType;
       description: string;
   } | undefined)[];
-      openMessage: (event: MouseEvent<HTMLButtonElement>) => void;
   }
   
   const ListingInfo: React.FC<ListingInfoProps> = ({
@@ -37,7 +35,6 @@ interface ListingInfoProps {
     category,
     locationValue,
     facility,
-    openMessage,
   }) => {
     const { getByValue } = useCountries();
   
@@ -56,18 +53,8 @@ interface ListingInfoProps {
               gap-2
             "
           >
-            <div>Hosted by {user?.name}</div>
+            <div>Hosted by {user?.nickname}</div>
             <Avatar src={null} />
-            <button className="
-              bg-slate-600
-              rounded-xl
-              w-24
-              flex
-              justify-center
-              items-center
-              text-white
-              hover:bg-gray-700
-            " onClick={openMessage}>Message</button>
           </div>
           <div className="
               flex 

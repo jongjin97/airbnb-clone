@@ -1,8 +1,7 @@
 export enum ActionTypes {
     OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL',
     CLOSE_LOGIN_MODAL = 'CLOSE_LOGIN_MODAL',
-    OPEN_MESSAGE_MODAL = "OPEN_MESSAGE_MODAL"
-}
+  }
   
   interface OpenLoginModalAction {
     type: ActionTypes.OPEN_LOGIN_MODAL;

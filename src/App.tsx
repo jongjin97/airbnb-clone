@@ -12,7 +12,6 @@ function App() {
         <Navbar/>
         <div className="pb-20 pt-28"> 
           <PageRoute/>
-          {/* <TestPage/> */}
         </div>
     </>
   );
