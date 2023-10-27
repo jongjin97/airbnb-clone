@@ -1,6 +1,7 @@
 package com.example.airbnb.config.auth;
 
 import com.example.airbnb.document.User;
+import com.example.airbnb.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,7 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 사용자의 권한을 설정합니다. 예시로 "ROLE_USER"를 부여합니다.
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        return Collections.singleton(new SimpleGrantedAuthority(Role.ROLE_USER.getRole()));
     }
 
     public User getUser() {

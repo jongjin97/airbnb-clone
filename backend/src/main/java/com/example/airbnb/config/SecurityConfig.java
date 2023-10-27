@@ -78,9 +78,9 @@ public class SecurityConfig {
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/user/signin", "/api/user/signup").permitAll()
-                        .anyRequest().permitAll())
+                        .requestMatchers(HttpMethod.GET, "/api/accommodation/*").permitAll()
+                        .anyRequest().hasAuthority("USER"))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)

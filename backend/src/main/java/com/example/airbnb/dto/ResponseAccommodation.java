@@ -40,7 +40,7 @@ public class ResponseAccommodation {
         this.price = accommodation.getPrice();
         this.imageSrc = accommodation.getImageSrc();
         this.user = new ResponseUser(accommodation.getUser());
-        this.reservation = accommodation.getReservations().stream().map(ResponseReservation::new).toList();
+        this.reservation = accommodation.getReservations() == null ? null : accommodation.getReservations().stream().map(ResponseReservation::new).toList();
         // convert Reservation to ResponseReservation (recursive call)
     }
 }
