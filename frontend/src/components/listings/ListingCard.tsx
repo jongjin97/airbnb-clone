@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import HeartButton from "../HeartButton";
 import { Listing, ResponseListing } from "src/interface/listing";
 import { Reservation } from "src/interface/reservation";
+import { useAppDispatch } from "src/app/hooks";
+import { openReviewModal } from "src/features/modal/ReviewModalAction";
 
 interface ListingCardProps {
     data: ResponseListing;
@@ -31,7 +33,7 @@ interface ListingCardProps {
     const { getByValue } = useCountries();
     const currentDate = new Date();
     const location = getByValue(data.location.value);
-  
+    const dispatch = useAppDispatch();
     const handleCancel = useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
@@ -42,7 +44,13 @@ interface ListingCardProps {
   
       onAction?.(actionId)
     }, [disabled, onAction, actionId]);
-  
+    
+    const handleReview = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      dispatch(openReviewModal());
+      
+    },[]);
+
     const price = useMemo(() => {
       if (reservation) {
         return reservation.totalPrice;
@@ -127,7 +135,7 @@ interface ListingCardProps {
             disabled={disabled}
             small
             label= 'Write review'
-            onClick={handleCancel}
+            onClick={handleReview}
           />
           )}
         </div>
