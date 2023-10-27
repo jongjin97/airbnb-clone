@@ -130,11 +130,11 @@ const initialDateRange = {
             mx-auto
           "
         >
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 mt-28">
             <ListingHead
               title={listing.title}
               imageSrc={`data:image/jpeg;base64,${listing.imageByte[0]}`}
-              locationValue={listing.locationValue}
+              locationValue={listing.location}
               id={listing.id}
               currentUser={currentUser}
             />

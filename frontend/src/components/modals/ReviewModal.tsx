@@ -8,10 +8,13 @@ import { closeReviewModal } from "src/features/modal/ReviewModalAction";
 import { Rating } from "react-simple-star-rating";
 import ColModal from "./ColModal";
 import StarRating from "../StarRating";
+import { saveReview } from "src/api/reiew.api";
+import toast from "react-hot-toast";
 
 const ReviewModal = () => {
     const router = useNavigate();
-    const reviewModal = useAppSelector((state) => state.review.isOpen)
+    const reviewModal = useAppSelector((state) => state.review.isOpen);
+    const listingId = useAppSelector((state) => state.review.listingId);
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -27,9 +30,15 @@ const ReviewModal = () => {
       },
     });
     const onSubmit: SubmitHandler<FieldValues> = 
-    (data) => {
+    (RequestReview) => {
       setIsLoading(true);
-      console.log(data);
+      
+      saveReview(listingId, RequestReview).then(() => {
+        dispatch(closeReviewModal());
+        router(`/listing/${listingId}`);
+      }).catch(() =>{
+        toast.error("리뷰 저장에 실패했습니다.");
+      });
       //dispatch(doLogin(data));
       setIsLoading(false);
     }

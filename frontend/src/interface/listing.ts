@@ -1,6 +1,7 @@
 import { IconType } from "react-icons";
 import { ResponseUser } from "./auth";
 import { Reservation } from "./reservation";
+import { Review } from "./review";
 
 export interface Listing {
   id: string;
@@ -52,4 +53,6 @@ export interface ResponseListing{
   category: string;
   facility: string[];
   imageByte: Uint8Array;
+  average: number;
+  review: Review[];
 }

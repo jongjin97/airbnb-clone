@@ -5,6 +5,7 @@ export enum ActionTypes {
   
   interface OpenReviewModalAction {
     type: ActionTypes.OPEN_REVIEW_MODAL;
+    payload: string;
   }
   
   interface CloseReviewModalAction {
@@ -13,8 +14,9 @@ export enum ActionTypes {
   
   export type ReviewModalActions = OpenReviewModalAction | CloseReviewModalAction;
   
-  export const openReviewModal = (): ReviewModalActions => ({
+  export const openReviewModal = (data: string): ReviewModalActions => ({
     type: ActionTypes.OPEN_REVIEW_MODAL,
+    payload: data,
   });
   
   export const closeReviewModal = (): ReviewModalActions => ({

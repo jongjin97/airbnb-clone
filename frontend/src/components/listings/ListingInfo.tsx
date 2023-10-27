@@ -93,6 +93,7 @@ interface ListingInfoProps {
         {category && (
           <ListingCategory
             icon={category.icon} 
+            key={category?.label}
             label={category?.label}
             description={category?.description} 
           />

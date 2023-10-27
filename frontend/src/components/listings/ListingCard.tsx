@@ -47,7 +47,7 @@ interface ListingCardProps {
     
     const handleReview = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
-      dispatch(openReviewModal());
+      dispatch(openReviewModal(data.id));
       
     },[]);
 
@@ -108,8 +108,16 @@ interface ListingCardProps {
               />
             </div>
           </div>
-          <div className="font-semibold text-lg">
-            {location?.region}, {location?.label}
+          <div className="font-semibold text-lg flex flex-row justify-between">
+            <div>
+              {location?.region}, {location?.label}
+            </div>
+            <div className="flex flex-row justify-center align-middle items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="black" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-6 h-6">
+                <polygon points="12 2 15.09 8.45 22 9.82 17 14.14 18.18 21 12 17.32 5.82 21 7 14.14 2 9.82 8.91 8.45 12 2" />
+              </svg>
+              {data.average}
+            </div>
           </div>
           <div className="font-light text-neutral-500">
             {reservationDate || data.category}

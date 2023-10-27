@@ -2,10 +2,11 @@ import useCountries from "src/hooks/useCountries";
 import { ResponseUser } from "src/interface/auth";
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
+import { CountrySelectValue } from "../inputs/CountrySelect";
 
 interface ListingHeadProps {
     title: string;
-    locationValue: string;
+    locationValue: CountrySelectValue;
     imageSrc: string;
     id: string;
     currentUser?: ResponseUser | null
@@ -20,13 +21,12 @@ interface ListingHeadProps {
   }) => {
     const { getByValue } = useCountries();
   
-    const location = getByValue(locationValue);
   
     return ( 
       <>
         <Heading
           title={title}
-          subtitle={`${location?.region}, ${location?.label}`}
+          subtitle={`${locationValue?.region}, ${locationValue?.label}`}
         />
         <div className="
             w-full
