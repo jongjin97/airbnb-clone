@@ -28,6 +28,7 @@ public class AccommodationTemplateImpl implements AccommodationTemplate{
     @Override
     public List<Accommodation> findAllByParam(Map<String, String> accommodationParam) {
         Query query = new Query();
+
         if(accommodationParam.isEmpty())
             return mongoTemplate.findAll(Accommodation.class);
 

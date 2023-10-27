@@ -26,7 +26,8 @@ public class ResponseAccommodation {
     private int price;
     private ResponseUser user;
     private List<ResponseReservation> reservation;
-
+    private List<ResponseReview> review;
+    private double average;
     public ResponseAccommodation(Accommodation accommodation) {
         this.id = accommodation.getId();
         this.bathroomCount = accommodation.getBathroomCount();
