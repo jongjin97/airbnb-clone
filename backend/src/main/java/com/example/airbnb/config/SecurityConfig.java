@@ -80,7 +80,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.POST,"/api/user/signin", "/api/user/signup").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/accommodation/*").permitAll()
-                        .anyRequest().hasAuthority("USER"))
+//                        .anyRequest().hasAuthority("USER"))
+                        .anyRequest().permitAll())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)

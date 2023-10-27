@@ -29,7 +29,7 @@ interface ListingCardProps {
   }) => {
     const router = useNavigate();
     const { getByValue } = useCountries();
-  
+    const currentDate = new Date();
     const location = getByValue(data.location.value);
   
     const handleCancel = useCallback(
@@ -114,13 +114,21 @@ interface ListingCardProps {
               <div className="font-light">night</div>
             )}
           </div>
-          {onAction && actionLabel && (
+          {onAction && actionLabel && reservation && new Date(reservation.endDate) > currentDate && (
             <Button
-              disabled={disabled}
-              small
-              label={actionLabel} 
-              onClick={handleCancel}
-            />
+            disabled={disabled}
+            small
+            label={actionLabel} 
+            onClick={handleCancel}
+          />
+          )}
+          {reservation && new Date(reservation.endDate) < currentDate && (
+            <Button
+            disabled={disabled}
+            small
+            label= 'Write review'
+            onClick={handleCancel}
+          />
           )}
         </div>
       </div>

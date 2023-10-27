@@ -51,8 +51,7 @@ public class AccommodationController {
         return success(accommodationList);
     }
     @GetMapping("/lists")
-    public ApiResult<List<ResponseAccommodation>> getAccommodationList(@AuthenticationPrincipal UserDetailsImpl userDetails
-            , @RequestParam Map<String, String> requestParam) throws Exception {
+    public ApiResult<List<ResponseAccommodation>> getAccommodationList(@RequestParam Map<String, String> requestParam) throws Exception {
         List<ResponseAccommodation> accommodationList = accommodationService.findAllByParam(requestParam);
         return success(accommodationList);
     }
