@@ -59,6 +59,7 @@ public class AccommodationService {
         ResponseAccommodation responseAccommodation = new ResponseAccommodation(accommodation);
         responseAccommodation.setImageByte(fileService.downloadFile(responseAccommodation.getImageSrc()));
         responseAccommodation.setReview(responseReviewList);
+        responseAccommodation.setAverage(calculateAverageRating(responseAccommodation.getReview()));
         return responseAccommodation;
     }
 
