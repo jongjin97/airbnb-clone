@@ -13,6 +13,9 @@ import { closeLoginModal } from "src/features/modal/LoginModalAction";
 import { openRegisterModal } from "src/features/modal/RegisterModalAction";
 import { login } from "src/api/auth.api";
 import { doLogin } from "src/features/auth/authAction";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import GoogleOAuth from "../GoogleOAuth";
 
 const LoginModal = () => {
     const router = useNavigate();
@@ -33,7 +36,7 @@ const LoginModal = () => {
         password: '',
       },
     });
-    
+
     const onSubmit: SubmitHandler<FieldValues> = 
     (data) => {
       setIsLoading(true);
@@ -85,6 +88,7 @@ const LoginModal = () => {
           icon={FcGoogle}
           onClick={() => null}
         />
+        <GoogleOAuth/>
         <Button 
           outline 
           label="Continue with Github"

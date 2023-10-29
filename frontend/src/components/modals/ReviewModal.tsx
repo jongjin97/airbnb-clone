@@ -35,7 +35,7 @@ const ReviewModal = () => {
       
       saveReview(listingId, RequestReview).then(() => {
         dispatch(closeReviewModal());
-        router(`/listing/${listingId}`);
+        router(`/listings/${listingId}`);
       }).catch(() =>{
         toast.error("리뷰 저장에 실패했습니다.");
       });

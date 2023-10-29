@@ -21,6 +21,8 @@ export interface Listing {
   facility: string[]
   user: ResponseUser; // Assuming User interface is defined
   reservations?: Reservation[]; // Assuming Reservation interface is defined
+  average: number;
+  review: Review[];
 }
 
 export interface IListingsParams {
