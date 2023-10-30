@@ -2,9 +2,7 @@ package com.example.airbnb.document;
 
 import com.example.airbnb.dto.RequestUser;
 import com.example.airbnb.enums.Role;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,6 +14,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Setter
 public class User {
     @Id
     private String id;

@@ -1,5 +1,6 @@
 package com.example.airbnb.config;
 
+import com.example.airbnb.config.auth.CustomOAuth2UserService;
 import com.example.airbnb.config.auth.UserDetailsServiceImpl;
 import com.example.airbnb.config.jwt.JwtTokenFilter;
 import com.example.airbnb.config.jwt.JwtTokenUtil;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final JwtTokenUtil jwtTokenUtil;
+    private final CustomOAuth2UserService customOAuth2UserService;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -48,29 +50,6 @@ public class SecurityConfig {
             }
         };
     }
-
-//    @Bean
-//    public AccessDeniedHandler accessDeniedHandler() {
-//        log.warn("accessDeniedHandler");
-//        return (request, response, e) -> {
-//            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//            response.setContentType("text/plain;charset=UTF-8");
-//            response.getWriter().write("ACCESS DENIED");
-//            response.getWriter().flush();
-//            response.getWriter().close();
-//        };
-//    }
-//
-//    @Bean
-//    public AuthenticationEntryPoint authenticationEntryPoint() {
-//        return (request, response, e) -> {
-//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            response.setContentType("text/plain;charset=UTF-8");
-//            response.getWriter().write("UNAUTHORIZED");
-//            response.getWriter().flush();
-//            response.getWriter().close();
-//        };
-//    }
     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -90,7 +69,8 @@ public class SecurityConfig {
 //                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
 //                        httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(authenticationEntryPoint()))
                 .userDetailsService(userDetailsServiceImpl)
-                .addFilterBefore(new JwtTokenFilter(userDetailsServiceImpl, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtTokenFilter(userDetailsServiceImpl, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class)
+                .oauth2Login(oauth2Login -> oauth2Login.userInfoEndpoint().userService(customOAuth2UserService));
         return http.build();
     }
 }
