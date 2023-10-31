@@ -1,6 +1,7 @@
 package com.example.airbnb.config;
 
 import com.example.airbnb.config.auth.CustomOAuth2UserService;
+import com.example.airbnb.config.auth.OauthSuccessHandler;
 import com.example.airbnb.config.auth.UserDetailsServiceImpl;
 import com.example.airbnb.config.jwt.JwtTokenFilter;
 import com.example.airbnb.config.jwt.JwtTokenUtil;
@@ -31,6 +32,7 @@ public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final JwtTokenUtil jwtTokenUtil;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final OauthSuccessHandler oauthSuccessHandler;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -70,7 +72,10 @@ public class SecurityConfig {
 //                        httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(authenticationEntryPoint()))
                 .userDetailsService(userDetailsServiceImpl)
                 .addFilterBefore(new JwtTokenFilter(userDetailsServiceImpl, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login(oauth2Login -> oauth2Login.userInfoEndpoint().userService(customOAuth2UserService));
+                .oauth2Login(oauth2Login -> oauth2Login.userInfoEndpoint().userService(customOAuth2UserService)
+                                .and().successHandler(oauthSuccessHandler)
+//                        .and().defaultSuccessUrl("http://localhost:3000?", true)
+                        );
         return http.build();
     }
 }

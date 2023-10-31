@@ -1,6 +1,7 @@
 package com.example.airbnb.config.jwt;
 
 import com.example.airbnb.config.auth.UserDetailsImpl;
+import com.example.airbnb.document.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
@@ -35,7 +36,17 @@ public class JwtTokenUtil {
                 .signWith(secretKey,  SignatureAlgorithm.HS256)
                 .compact();
     }
-
+    public String generateTokenByUser(User user) {
+        Date now = new Date();
+        SecretKey secretKey = generalKey();
+        return Jwts.builder()
+                .claim("id", user.getId())
+                .setSubject(user.getEmail())
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + EXPIRATION_TIME))
+                .signWith(secretKey,  SignatureAlgorithm.HS256)
+                .compact();
+    }
     public String extractJwtFromRequest(HttpServletRequest request) {
         // 헤더 또는 쿠키에서 JWT 토큰 추출하는 로직 구현
         // 예: Authorization 헤더에서 "Bearer <token>" 형식으로 추출
