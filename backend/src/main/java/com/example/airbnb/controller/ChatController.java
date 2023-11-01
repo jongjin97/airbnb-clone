@@ -1,17 +1,32 @@
 package com.example.airbnb.controller;
 
+import com.example.airbnb.config.auth.UserDetailsImpl;
 import com.example.airbnb.document.ChatMessage;
+import com.example.airbnb.dto.ChatMessageDto;
+import com.example.airbnb.dto.ResponseChatRoom;
+import com.example.airbnb.service.ChatRoomService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+import static com.example.airbnb.utils.ApiUtils.ApiResult;
+import static com.example.airbnb.utils.ApiUtils.success;
 @Controller
+@RequiredArgsConstructor
 public class ChatController {
-
     @MessageMapping("/chat/{chatRoomId}") // 토픽을 채팅방 ID로 구분
-    @SendTo("/topic/chat/{chatRoomId}") // 토픽을 통해 메시지 전달
-    public ChatMessage sendMessage(@DestinationVariable String chatRoomId, ChatMessage message) {
+    @SendTo("/sub/chat/{chatRoomId}") // 토픽을 통해 메시지 전달
+    public ChatMessageDto sendMessage(@DestinationVariable String chatRoomId, ChatMessageDto message) {
+        System.out.println(message);
         // 메시지 처리 로직
         return message;
     }

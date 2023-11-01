@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
@@ -25,6 +27,8 @@ public class ReservationService {
         reservation.setUser(user);
 
         Reservation savedReservation = reservationRepository.save(reservation);
+        if(accommodation.getReservations() == null)
+            accommodation.setReservations(new ArrayList<>());
         accommodation.getReservations().add(savedReservation);
         accommodationRepository.save(accommodation);
         user.getReservations().add(savedReservation);

@@ -13,12 +13,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseUser {
+    private String id;
     private String name;
     private String email;
     private String role;
     private String token;
     private List<String> favorites;
     public ResponseUser(User user){
+        this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
         this.role = user.getRole();
