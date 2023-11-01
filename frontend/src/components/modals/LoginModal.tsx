@@ -23,7 +23,15 @@ const LoginModal = () => {
     const registerModal = useAppSelector((state) => state.register.isOpen)
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
-  
+    const handleGoogleLogin = async () => {
+      const authUrl = `http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000`;
+      try {
+        // 구글 로그인 URL로 리다이렉트
+        window.location.href = authUrl;
+      } catch (error) {
+        console.error("구글 로그인 에러:", error);
+      }
+    };
     const { 
       register, 
       handleSubmit,
@@ -86,9 +94,8 @@ const LoginModal = () => {
           outline 
           label="Continue with Google"
           icon={FcGoogle}
-          onClick={() => null}
+          onClick={handleGoogleLogin}
         />
-        <GoogleOAuth/>
         <Button 
           outline 
           label="Continue with Github"

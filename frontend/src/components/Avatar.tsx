@@ -2,14 +2,15 @@
 
 interface AvatarProps {
   src: string | null | undefined;
+  size?: number;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ src }) => {
+const Avatar: React.FC<AvatarProps> = ({ src, size }) => {
   return ( 
     <img
       className="rounded-full" 
-      height="30" 
-      width="30" 
+      height= {size === undefined ? "30" : size}
+      width={size === undefined ? "30" : size}
       alt="Avatar" 
       src={src || '/placeholder.jpg'}
     />
