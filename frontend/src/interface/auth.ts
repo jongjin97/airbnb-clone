@@ -9,6 +9,12 @@ export interface RequestSignIn{
     password: string,
 }
 
+export interface OtherUser{
+    email: string,
+    id: string,
+    name: string,
+}
+
 export interface ResponseUser {
     email: string,
     id: string,

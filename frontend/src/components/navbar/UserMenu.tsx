@@ -92,6 +92,10 @@ const UserMenu = () => {
               {user ? (
                 <>
                   <MenuItem 
+                    label="My Messages" 
+                    onClick={() => router('/messages')}
+                  />
+                  <MenuItem 
                     label="My trips" 
                     onClick={() => router('/trips')}
                   />

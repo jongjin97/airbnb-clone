@@ -4,6 +4,7 @@ import ToasterProvider from './providers/ToasterProvider';
 import ModalsProvider from './providers/ModalsProvider';
 import PageRoute from './router/PageRoute';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import ChatComponent from './test/ChatComponent';
 
 function App() {
   return (

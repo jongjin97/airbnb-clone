@@ -7,6 +7,7 @@ import Oauth from "src/page/Oauth";
 import PropertiesPage from "src/page/PropertiesPage";
 import ReservationsPage from "src/page/ReservationPage";
 import TripsPage from "src/page/TripsPage";
+import ChatComponent from "src/test/ChatComponent";
 
 function PageRoute(){
     return (
@@ -18,6 +19,8 @@ function PageRoute(){
           <Route path="/reservations" element={<ReservationsPage/>} />
           <Route path="/properties" element={<PropertiesPage/>} />
           <Route path="/auth/login" element={<Oauth />} />
+          <Route path="/messages/:id" element={<ChatComponent />} />
+          <Route path="/messages" element={<ChatComponent />} />
         </Routes>
     );
 };

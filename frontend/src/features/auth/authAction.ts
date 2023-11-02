@@ -11,7 +11,7 @@ import { closeRegisterModal } from "../modal/RegisterModalAction";
 export const doLogin = createAsyncThunk('auth/doLogin', async (requestSignIn: FieldValues, {dispatch}) =>
   login(requestSignIn).then((callback) => {
     persistToken(callback.headers.authorization);
-    dispatch(setUser(callback.data));
+    dispatch(setUser(callback.data.response));
     toast.success('Logged in');
     dispatch(closeLoginModal());
     

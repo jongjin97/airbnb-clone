@@ -20,6 +20,7 @@ import { openMessageModal } from "src/features/modal/MessageModalAction";
 import Avatar from "../Avatar";
 import { list } from "@material-tailwind/react";
 import StarRating from "../StarRating";
+import { createChatRoom } from "src/api/chat.api";
 
 const initialDateRange = {
     startDate: new Date(),
@@ -45,7 +46,8 @@ const initialDateRange = {
     const dispatch = useAppDispatch();
 
     const handleMessage = useCallback(() => {
-      dispatch(openMessageModal());
+      createChatRoom(listing.user.id).then(() => router('/messages'));
+      
     }, []);
 
     const disabledDates = useMemo(() => {
