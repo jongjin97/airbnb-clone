@@ -2,6 +2,7 @@ package com.example.airbnb.config.auth;
 
 import com.example.airbnb.config.jwt.JwtTokenUtil;
 import com.example.airbnb.document.User;
+import com.example.airbnb.dto.ResponseUser;
 import com.example.airbnb.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -29,10 +30,11 @@ public class OauthSuccessHandler implements AuthenticationSuccessHandler {
         OAuth2User user2 = (OAuth2User) authentication.getPrincipal();
         authentication.getPrincipal();
         User user = userRepository.findByEmail(user2.getAttribute("email")).get();
+        ResponseUser responseUser = new ResponseUser(user);
 
         String accessToken = jwtTokenUtil.generateTokenByUser(user);
         ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(user);
+        String userJson = objectMapper.writeValueAsString(responseUser);
         String encodedUserJson = URLEncoder.encode(userJson, StandardCharsets.UTF_8);
         response.sendRedirect(UriComponentsBuilder.fromUriString("http://localhost:3000/auth/login")
                 .queryParam("accessToken", accessToken)

@@ -8,6 +8,7 @@ import com.mongodb.BasicDBObject;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Fields;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -15,9 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -50,23 +49,31 @@ public class AccommodationTemplateImpl implements AccommodationTemplate{
         if (accommodationParam.get("locationValue") != null) {
             query.addCriteria(Criteria.where("location.value").is(accommodationParam.get("locationValue")));
         }
+        List<Accommodation> accommodationList = mongoTemplate.find(query, Accommodation.class);
+        List<Accommodation> result = new ArrayList<>();
         if (accommodationParam.containsKey("startDate") && accommodationParam.containsKey("endDate")) {
+
             String startDateStr = accommodationParam.get("startDate");
             String endDateStr = accommodationParam.get("endDate");
 
             Date startDate = parseDate(startDateStr);
             Date endDate = parseDate(endDateStr);
 
-            // startDate와 endDate 사이에 예약이 없는 숙소를 검색합니다.
-            Criteria reservationCriteria = new Criteria().orOperator(
-                    Criteria.where("reservations").size(0), // 예약이 없는 경우
-                    Criteria.where("reservations.startDate").gt(endDate), // 예약 시작일이 endDate 이후인 경우
-                    Criteria.where("reservations.endDate").lt(startDate) // 예약 종료일이 startDate 이전인 경우
-            );
-
-            query.addCriteria(reservationCriteria);
+            for(Accommodation accommodation: accommodationList){
+                query = new Query();
+                Criteria reservationCriteria = new Criteria().orOperator(
+                        Criteria.where("startDate").gte(startDate).lte(endDate),
+                        Criteria.where("endDate").gte(startDate).lte(endDate)
+                );
+                query.addCriteria(Criteria.where("accommodationId").is(accommodation.getId()));
+                query.addCriteria(reservationCriteria);
+                List<Reservation> reservations = mongoTemplate.find(query, Reservation.class);
+                if(reservations.isEmpty())
+                    result.add(accommodation);
+            }
+            return result;
         }
-        return mongoTemplate.find(query, Accommodation.class);
+        return accommodationList;
     }
     private Date parseDate(String dateStr) {
         SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd" );
