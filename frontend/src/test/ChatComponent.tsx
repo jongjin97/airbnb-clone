@@ -52,8 +52,19 @@ const ChatComponent = () => {
           </div>
         </div>
         ))}
+
+        <div
+          className="flex flex-row py-4 px-2 justify-center items-center border-b-2"
+        >
+          <div className="w-1/4">
+            <Avatar src={null} size={50}/>
+          </div>
+          <div className="w-full">
+            <div className="text-lg font-semibold">Luis1994</div>
+          </div>
+        </div>
       </div>
-      {currChat && <ChatBox key={currChat.id} currChat={currChat} />}
+      {currChat && <ChatBox currChat={currChat} />}
     </div>
      );
 };

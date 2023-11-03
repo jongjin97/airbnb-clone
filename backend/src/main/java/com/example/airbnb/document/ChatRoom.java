@@ -1,7 +1,9 @@
 package com.example.airbnb.document;
 
-import com.example.airbnb.dto.ChatMessageDto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Setter
 public class ChatRoom {
     @Id
     private String id;
@@ -22,5 +23,5 @@ public class ChatRoom {
     private String otherUserId;
 
     @DBRef
-    private List<ChatMessage> chatMessages;
+    private List<ChatMessage> chatMessages = new ArrayList<>();
 }
