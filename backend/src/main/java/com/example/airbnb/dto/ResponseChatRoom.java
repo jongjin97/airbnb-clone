@@ -1,16 +1,18 @@
 package com.example.airbnb.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.airbnb.document.ChatMessage;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ResponseChatRoom {
     private String id;
     private ResponseUser user;
     private ResponseUser user2;
+    private List<ChatMessageDto> messages;
 }

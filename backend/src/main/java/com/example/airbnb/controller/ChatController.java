@@ -23,10 +23,12 @@ import static com.example.airbnb.utils.ApiUtils.success;
 @Controller
 @RequiredArgsConstructor
 public class ChatController {
+    private final ChatRoomService chatRoomService;
     @MessageMapping("/chat/{chatRoomId}") // 토픽을 채팅방 ID로 구분
     @SendTo("/sub/chat/{chatRoomId}") // 토픽을 통해 메시지 전달
     public ChatMessageDto sendMessage(@DestinationVariable String chatRoomId, ChatMessageDto message) {
         System.out.println(message);
+        chatRoomService.updateChatMessage(chatRoomId, message);
         // 메시지 처리 로직
         return message;
     }
