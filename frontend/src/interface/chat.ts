@@ -1,15 +1,14 @@
-import { OtherUser } from "./auth";
+import { OtherUser } from './auth';
 
 export interface ChatRoom {
-    id: string;
-    user: OtherUser;
-    user2: OtherUser;
-    messages: chatMessage[];
+  id: string;
+  user: OtherUser;
+  user2: OtherUser;
+  messages: chatMessage[];
 }
 
 export interface chatMessage {
-    chatRoomId: string;
-    content: string;
-    senderId: OtherUser;
+  chatRoomId: string;
+  content: string;
+  senderId: OtherUser;
 }
-

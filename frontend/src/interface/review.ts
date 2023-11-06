@@ -1,7 +1,7 @@
-import { ResponseUser } from "./auth";
+import { ResponseUser } from './auth';
 
 export interface Review {
-    rating: number;
-    message: string;
-    responseUser: ResponseUser;
+  rating: number;
+  message: string;
+  responseUser: ResponseUser;
 }

@@ -1,5 +1,5 @@
 export interface errorInterface {
-    code: string,
-    message: string,
-    name: string,
+  code: string;
+  message: string;
+  name: string;
 }

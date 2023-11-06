@@ -1,26 +1,23 @@
-import { ResponseUser } from "src/interface/auth";
-import { Listing } from "src/interface/listing";
-import Container from "../Container";
-import Heading from "../Heading";
-import ListingCard from "../listings/ListingCard";
+import { ResponseUser } from 'src/interface/auth';
+import { Listing } from 'src/interface/listing';
+import Container from '../Container';
+import Heading from '../Heading';
+import ListingCard from '../listings/ListingCard';
 
 interface FavoritesClientProps {
-    listings: Listing[],
-    currentUser?: ResponseUser | null,
-  }
-  
-  const FavoritesClient: React.FC<FavoritesClientProps> = ({
-    listings,
-    currentUser
-  }) => {
-    return (
-      <Container>
-        <Heading
-          title="Favorites"
-          subtitle="List of places you favorited!"
-        />
-        <div 
-          className="
+  listings: Listing[];
+  currentUser?: ResponseUser | null;
+}
+
+const FavoritesClient: React.FC<FavoritesClientProps> = ({
+  listings,
+  currentUser,
+}) => {
+  return (
+    <Container>
+      <Heading title="Favorites" subtitle="List of places you favorited!" />
+      <div
+        className="
             mt-10
             grid 
             grid-cols-1 
@@ -31,17 +28,17 @@ interface FavoritesClientProps {
             2xl:grid-cols-6
             gap-8
           "
-        >
-          {listings.map((listing: any) => (
-            <ListingCard
-              currentUser={currentUser}
-              key={listing.id}
-              data={listing}
-            />
-          ))}
-        </div>
-      </Container>
-     );
-  }
-   
-  export default FavoritesClient;
+      >
+        {listings.map((listing: any) => (
+          <ListingCard
+            currentUser={currentUser}
+            key={listing.id}
+            data={listing}
+          />
+        ))}
+      </div>
+    </Container>
+  );
+};
+
+export default FavoritesClient;

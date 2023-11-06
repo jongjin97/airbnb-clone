@@ -1,50 +1,52 @@
-import qs from "query-string";
-import { useCallback } from "react";
-import { IconType } from "react-icons";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import qs from 'query-string';
+import { useCallback } from 'react';
+import { IconType } from 'react-icons';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface CategoryBoxProps {
-    icon: IconType,
-    label: string;
-    selected?: boolean;
-  }
-  
-  const CategoryBox: React.FC<CategoryBoxProps> = ({
-    icon: Icon,
-    label,
-    selected,
-  }) => {
-    const router = useNavigate();
-    const location = useLocation();
-    const [URLSearchParams, SetURLSearchParams] = useSearchParams();;
+  icon: IconType;
+  label: string;
+  selected?: boolean;
+}
 
-    const handleClick = useCallback(() => {
-      console.log(URLSearchParams);
-      let currentQuery = {};
-      if (URLSearchParams) {
-        currentQuery = qs.parse(URLSearchParams.toString())
-      }
+const CategoryBox: React.FC<CategoryBoxProps> = ({
+  icon: Icon,
+  label,
+  selected,
+}) => {
+  const router = useNavigate();
+  const [URLSearchParams] = useSearchParams();
 
-      const updatedQuery: any = {
-        ...currentQuery,
-        category: label
-      }
-      if (URLSearchParams?.get('category') === label) {
-        delete updatedQuery.category;
-      }
-      
-      const url = qs.stringifyUrl({
+  const handleClick = useCallback(() => {
+    console.log(URLSearchParams);
+    let currentQuery = {};
+    if (URLSearchParams) {
+      currentQuery = qs.parse(URLSearchParams.toString());
+    }
+
+    const updatedQuery: any = {
+      ...currentQuery,
+      category: label,
+    };
+    if (URLSearchParams?.get('category') === label) {
+      delete updatedQuery.category;
+    }
+
+    const url = qs.stringifyUrl(
+      {
         url: '/',
-        query: updatedQuery
-      }, { skipNull: true });
-      
-      router(url);
-    }, [label, router, URLSearchParams]);
-  
-    return ( 
-      <div
-        onClick={handleClick}
-        className={`
+        query: updatedQuery,
+      },
+      { skipNull: true }
+    );
+
+    router(url);
+  }, [label, router, URLSearchParams]);
+
+  return (
+    <div
+      onClick={handleClick}
+      className={`
           flex 
           flex-col 
           items-center 
@@ -58,13 +60,11 @@ interface CategoryBoxProps {
           ${selected ? 'border-b-neutral-800' : 'border-transparent'}
           ${selected ? 'text-neutral-800' : 'text-neutral-500'}
         `}
-      >
-        <Icon size={26} />
-        <div className="font-medium text-sm">
-          {label}
-        </div>
-      </div>
-     );
-  }
-   
-  export default CategoryBox;
+    >
+      <Icon size={26} />
+      <div className="font-medium text-sm">{label}</div>
+    </div>
+  );
+};
+
+export default CategoryBox;

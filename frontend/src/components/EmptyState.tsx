@@ -1,23 +1,23 @@
-import { useNavigate } from "react-router-dom";
-import Button from "./Button";
-import Heading from "./Heading";
+import { useNavigate } from 'react-router-dom';
+import Button from './Button';
+import Heading from './Heading';
 
 interface EmptyStateProps {
-    title?: string;
-    subtitle?: string;
-    showReset?: boolean;
-  }
-  
-  const EmptyState: React.FC<EmptyStateProps> = ({
-    title = "No exact matches",
-    subtitle = "Try changing or removing some of your filters.",
-    showReset
-  }) => {
-    const router = useNavigate();
-  
-    return ( 
-      <div 
-        className="
+  title?: string;
+  subtitle?: string;
+  showReset?: boolean;
+}
+
+const EmptyState: React.FC<EmptyStateProps> = ({
+  title = 'No exact matches',
+  subtitle = 'Try changing or removing some of your filters.',
+  showReset,
+}) => {
+  const router = useNavigate();
+
+  return (
+    <div
+      className="
           h-[60vh]
           flex 
           flex-col 
@@ -25,23 +25,19 @@ interface EmptyStateProps {
           justify-center 
           items-center 
         "
-      >
-        <Heading
-          center
-          title={title}
-          subtitle={subtitle}
-        />
-        <div className="w-48 mt-4">
-          {showReset && (
-            <Button
-              outline
-              label="Remove all filters"
-              onClick={() => router('/')}
-            />
-          )}
-        </div>
+    >
+      <Heading center title={title} subtitle={subtitle} />
+      <div className="w-48 mt-4">
+        {showReset && (
+          <Button
+            outline
+            label="Remove all filters"
+            onClick={() => router('/')}
+          />
+        )}
       </div>
-     );
-  }
-   
-  export default EmptyState;
+    </div>
+  );
+};
+
+export default EmptyState;

@@ -1,23 +1,15 @@
-import { useCallback, useState } from "react";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { TbPhotoPlus } from "react-icons/tb";
+import { useCallback, useState } from 'react';
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
+import { TbPhotoPlus } from 'react-icons/tb';
 
-declare global {
-    var cloudinary: any
-  }
-  
-  const uploadPreset = "pgc9ehd5";
-  
-  interface ImageUploadProps {
-    onChange: (value: string[]) => void;
-    value: string[];
-  }
-  
-  const ImageUpload: React.FC<ImageUploadProps> = ({
-    onChange,
-    value
-  }) => {
-    const handleUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+interface ImageUploadProps {
+  onChange: (value: string[]) => void;
+  value: string[];
+}
+
+const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
+  const handleUpload = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files;
       if (files) {
         const uploadedImages: string[] = [];
@@ -46,25 +38,29 @@ declare global {
       //   };
       //   reader.readAsDataURL(file);
       // }
-    }, [onChange]);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const handlePreviousImage = useCallback(() => {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === 0 ? value.length - 1 : prevIndex - 1
-      );
-    }, [value]);
-  
-    const handleNextImage = useCallback(() => {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === value.length - 1 ? 0 : prevIndex + 1
-      );
-    }, [value]);
+    },
+    [onChange]
+  );
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const handlePreviousImage = useCallback(() => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? value.length - 1 : prevIndex - 1
+    );
+  }, [value]);
 
-          return (
-            <>
-            <div
-              onClick={() => (document.getElementById('fileInput') as HTMLInputElement).click()}
-              className="
+  const handleNextImage = useCallback(() => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === value.length - 1 ? 0 : prevIndex + 1
+    );
+  }, [value]);
+
+  return (
+    <>
+      <div
+        onClick={() =>
+          (document.getElementById('fileInput') as HTMLInputElement).click()
+        }
+        className="
                 relative
                 cursor-pointer
                 hover:opacity-70
@@ -80,43 +76,45 @@ declare global {
                 gap-4
                 text-neutral-600
               "
-            >
-              <TbPhotoPlus
-                size={50}
-              />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleUpload}
-                id="fileInput"
-                style={{ display: 'none' }}
-              />
-              <div className="font-semibold text-lg">
-                Click to upload
-              </div>
-              {value && (
-                <div className="
-                absolute inset-0 w-full h-full">
-                    <img style={{ objectFit: 'cover', width:'100%', height:'100%' }}
-                     src={value[currentImageIndex]} 
-                     alt={`House ${currentImageIndex + 1}`} />
-                </div>
-              )}
-            </div>
-            <div className="
+      >
+        <TbPhotoPlus size={50} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleUpload}
+          id="fileInput"
+          style={{ display: 'none' }}
+        />
+        <div className="font-semibold text-lg">Click to upload</div>
+        {value && (
+          <div
+            className="
+                absolute inset-0 w-full h-full"
+          >
+            <img
+              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              src={value[currentImageIndex]}
+              alt={`House ${currentImageIndex + 1}`}
+            />
+          </div>
+        )}
+      </div>
+      <div
+        className="
               flex 
               justify-between
               
-            ">
-              {value.length >1 && (
-                    <>
-                    <AiOutlineArrowLeft size={20} onClick={handlePreviousImage}/>
-                    <AiOutlineArrowRight size={20} onClick={handleNextImage}/>
-                    </>
-                  )}
-            </div>
-            </>
-          )
-  }
-  
-  export default ImageUpload;
+            "
+      >
+        {value.length > 1 && (
+          <>
+            <AiOutlineArrowLeft size={20} onClick={handlePreviousImage} />
+            <AiOutlineArrowRight size={20} onClick={handleNextImage} />
+          </>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default ImageUpload;

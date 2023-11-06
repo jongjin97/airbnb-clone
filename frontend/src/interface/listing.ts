@@ -1,7 +1,7 @@
-import { IconType } from "react-icons";
-import { ResponseUser } from "./auth";
-import { Reservation } from "./reservation";
-import { Review } from "./review";
+import { IconType } from 'react-icons';
+import { ResponseUser } from './auth';
+import { Reservation } from './reservation';
+import { Review } from './review';
 
 export interface Listing {
   id: string;
@@ -18,7 +18,7 @@ export interface Listing {
   price: number;
   imageByte: Uint8Array;
   location: CountrySelectValue;
-  facility: string[]
+  facility: string[];
   user: ResponseUser; // Assuming User interface is defined
   reservations?: Reservation[]; // Assuming Reservation interface is defined
   average: number;
@@ -38,11 +38,11 @@ export interface IListingsParams {
 export type CountrySelectValue = {
   flag: string;
   label: string;
-  latlng: number[],
+  latlng: number[];
   region: string;
-  value: string
-}
-export interface ResponseListing{
+  value: string;
+};
+export interface ResponseListing {
   id: string;
   guestCount?: number;
   roomCount?: number;

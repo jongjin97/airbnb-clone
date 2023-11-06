@@ -11,24 +11,26 @@ const initialState: AuthState = {
   user: readUser(),
 };
 
-export const setUser = createAction<PrepareAction<ResponseUser>>('user/setUser', (newUser) =>{
-  persistUser(newUser);
+export const setUser = createAction<PrepareAction<ResponseUser>>(
+  'user/setUser',
+  (newUser) => {
+    persistUser(newUser);
 
-  return {
-    payload: newUser,
+    return {
+      payload: newUser,
+    };
   }
-})
+);
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setUser, (state, action) => {
       state.user = action.payload;
-    })
-  }
+    });
+  },
 });
 
 export const selectUser = (state: RootState) => state.auth.user;

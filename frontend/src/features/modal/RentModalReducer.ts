@@ -1,4 +1,4 @@
-import { Reducer } from "redux";
+import { Reducer } from 'redux';
 import { ActionTypes, RentModalActions } from './RentModalAction';
 
 interface RentModalState {
@@ -20,7 +20,7 @@ const rentModalReducer: Reducer<RentModalState, RentModalActions> = (
       return { ...state, isOpen: false };
     default:
       return state;
-   }
+  }
 };
 
 export default rentModalReducer;

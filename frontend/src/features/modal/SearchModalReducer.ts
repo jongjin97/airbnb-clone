@@ -1,4 +1,4 @@
-import { Reducer } from "redux";
+import { Reducer } from 'redux';
 import { ActionTypes, SearchModalActions } from './SearchModalAction';
 
 interface SearchModalState {
@@ -20,7 +20,7 @@ const searchModalReducer: Reducer<SearchModalState, SearchModalActions> = (
       return { ...state, isOpen: false };
     default:
       return state;
-   }
+  }
 };
 
 export default searchModalReducer;

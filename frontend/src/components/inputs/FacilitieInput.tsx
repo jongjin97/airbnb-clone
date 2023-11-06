@@ -1,7 +1,7 @@
-import { IconType } from "react-icons";
+import { IconType } from 'react-icons';
 
 interface FacilitiBoxProps {
-  icon: IconType,
+  icon: IconType;
   label: string;
   selected?: boolean;
   onClick: (value: string) => void;
@@ -11,9 +11,9 @@ const FacilitiInput: React.FC<FacilitiBoxProps> = ({
   icon: Icon,
   label,
   selected,
-  onClick
+  onClick,
 }) => {
-  return ( 
+  return (
     <div
       onClick={() => onClick(label)}
       className={`
@@ -30,11 +30,9 @@ const FacilitiInput: React.FC<FacilitiBoxProps> = ({
       `}
     >
       <Icon size={30} />
-      <div className="font-semibold">
-        {label}
-      </div>
+      <div className="font-semibold">{label}</div>
     </div>
-   );
-}
- 
+  );
+};
+
 export default FacilitiInput;
