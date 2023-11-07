@@ -6,19 +6,12 @@ import Heading from '../Heading';
 import Input from '../inputs/Input';
 import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/app/hooks';
-import toast from 'react-hot-toast';
 import { closeLoginModal } from 'src/features/modal/LoginModalAction';
 import { openRegisterModal } from 'src/features/modal/RegisterModalAction';
-import { login } from 'src/api/auth.api';
 import { doLogin } from 'src/features/auth/authAction';
-import { useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
-import GoogleOAuth from '../GoogleOAuth';
 
 const LoginModal = () => {
-  const router = useNavigate();
   const loginModal = useAppSelector((state) => state.login.isOpen);
   const registerModal = useAppSelector((state) => state.register.isOpen);
   const dispatch = useAppDispatch();

@@ -1,15 +1,10 @@
-import { FcGoogle } from 'react-icons/fc';
-import Button from '../Button';
 import Modal from './Modal';
-import { AiFillGithub } from 'react-icons/ai';
 import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/app/hooks';
 import { closeMessageModal } from 'src/features/modal/MessageModalAction';
 
 const MessageModal = () => {
-  const router = useNavigate();
   const messageModal = useAppSelector((state) => state.message.isOpen);
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -23,18 +18,13 @@ const MessageModal = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = () => {
     setIsLoading(true);
-    //dispatch(doLogin(data));
     setIsLoading(false);
   };
   const handleCloseModal = useCallback(() => {
     dispatch(closeMessageModal());
   }, []);
-
-  const onToggle = useCallback(() => {
-    dispatch(closeMessageModal());
-  }, [messageModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">

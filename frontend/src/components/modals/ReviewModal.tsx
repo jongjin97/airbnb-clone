@@ -54,10 +54,6 @@ const ReviewModal = () => {
     setIsLoading(false);
   }, []);
 
-  const onToggle = useCallback(() => {
-    dispatch(closeReviewModal());
-  }, [reviewModal]);
-
   const bodyContent = (
     <div
       className="

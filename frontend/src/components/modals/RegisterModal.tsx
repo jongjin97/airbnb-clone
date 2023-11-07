@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { useState, useCallback } from 'react';
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import Input from '../inputs/Input';
@@ -12,8 +10,6 @@ import { useAppDispatch, useAppSelector } from 'src/app/hooks';
 import { closeRegisterModal } from 'src/features/modal/RegisterModalAction';
 import { RootState } from 'src/app/store';
 import { openLoginModal } from 'src/features/modal/LoginModalAction';
-import { httpApi } from 'src/api/http.api';
-import { regist } from 'src/api/auth.api';
 import { doSignUp } from 'src/features/auth/authAction';
 
 const RegisterModal = () => {

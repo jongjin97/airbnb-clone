@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState, useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
