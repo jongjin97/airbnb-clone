@@ -6,9 +6,10 @@ import PageRoute from './router/PageRoute';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
+  const key: string = process.env.REACT_APP_GOOGLE_CLIENT_ID as string;
   return (
     <>
-      <GoogleOAuthProvider clientId="97291905534-9160288hk39j0eoq22srmasgd4a9o19o.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={key}>
         <ToasterProvider />
         <ModalsProvider />
         <Navbar />
