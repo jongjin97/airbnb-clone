@@ -1,18 +1,9 @@
 import { useState, useCallback } from 'react';
-import {
-  useForm,
-  FieldValues,
-  SubmitHandler,
-  RegisterOptions,
-  UseFormRegisterReturn,
-} from 'react-hook-form';
+import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'src/app/hooks';
-import { closeMessageModal } from 'src/features/modal/MessageModalAction';
 import Modal from './Modal';
 import { closeReviewModal } from 'src/features/modal/ReviewModalAction';
-import { Rating } from 'react-simple-star-rating';
-import ColModal from './ColModal';
 import StarRating from '../StarRating';
 import { saveReview } from 'src/api/reiew.api';
 import toast from 'react-hot-toast';
